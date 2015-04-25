@@ -3,17 +3,17 @@ Tags: related posts, related, similar posts, posts, custom post types, tags, cat
 Contributors: Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 3.0
-Tested up to: 4.0
+Requires at least: 3.5
+Tested up to: 4.2
 License: GPLv2 or later
 
-Restrict the related posts by Contextual Related Posts to the same category and/or tag.
+Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy.
 
 == Description ==
 
 <a href="http://ajaydsouza.com/wordpress/plugins/crp-taxonomy/">Contextual Related Posts</a> allows you to display highly relevant posts on your WordPress blog.
 
-CRP Taxonomy Tools gives you the option to restrict these related posts to the same category and/or tag of the current post. The plugin will add two checkboxes under General options under the Related Posts page.
+CRP Taxonomy Tools gives you the option to restrict these related posts to the same category, tag or custom taxonomy of the current post or custom post type. The plugin adds checkboxes under General options under the Related Posts options page.
 
 Requires Contextual Related Posts v2.0 or higher.
 
@@ -28,12 +28,15 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 == Upgrade Notice ==
 
 = 1.0.0 =
-* Initial release
+* Custom taxonomy support;
 
 
 == Changelog ==
 
-= 1.0.1 =
+= 1.1.0 =
+* New: Added support for custom taxonomies. Very useful if your custom post types have custom taxonomies
+
+= 1.0.0 =
 * Initial release
 
 

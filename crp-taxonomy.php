@@ -89,6 +89,10 @@ function crpt_crp_posts_where( $where ) {
 		$taxonomies[] = 'post_tag';
 	}
 
+	if ( $crp_settings['crpt_taxes'] ) {
+		$taxonomies = array_merge( $taxonomies, explode( ",", $crp_settings['crpt_taxes'] ) );
+	}
+
 	$terms = wp_get_object_terms( $post->ID, $taxonomies );
 	$term_ids = wp_list_pluck( $terms, 'term_id' );
 

@@ -28,8 +28,25 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function crpt_save_options( $crp_settings, $postvariable ) {
 
+	/* Save options for categories and tags */
 	$crp_settings['crpt_tag'] = ( isset( $postvariable['crpt_tag'] ) ? true : false );
 	$crp_settings['crpt_category'] = ( isset( $postvariable['crpt_category'] ) ? true : false );
+
+	/* Fetch custom taxonomies */
+	$args = array(
+		'public'   => true,
+		'_builtin' => false,
+	);
+	$output = 'names'; // or objects
+	$operator = 'and'; // 'and' or 'or'
+	$wp_taxonomies = get_taxonomies( $args, $output, $operator );
+
+	/* Save options for custom taxonomies */
+	$taxonomies = ( isset( $postvariable['crpt_taxes'] ) && is_array( $postvariable['crpt_taxes'] ) ) ? $postvariable['crpt_taxes'] : array();
+
+	$taxonomies = array_intersect( $wp_taxonomies, $taxonomies );
+
+	$crp_settings['crpt_taxes'] = implode( ",", $taxonomies );
 
 	return $crp_settings;
 }
@@ -46,12 +63,31 @@ add_filter( 'crp_save_options', 'crpt_save_options', 10, 2 );
  */
 function crt_general_options( $crp_settings ) {
 
+	$args = array(
+		'public'   => true,
+		'_builtin' => false,
+	);
+	$output = 'names'; // or objects
+	$operator = 'and'; // 'and' or 'or'
+	$wp_taxonomies = get_taxonomies( $args, $output, $operator );
+
+	$taxonomies = isset( $crp_settings['crpt_taxes'] ) ? explode( ",", $crp_settings['crpt_taxes'] ) : array();
+
+	$taxonomies = array_intersect( $taxonomies, $wp_taxonomies );
+
 ?>
 
 	<tr><th scope="row"><?php _e( 'Fetch related posts only from:', 'crp-taxonomy' ); ?></th>
 		<td>
 			<label><input type="checkbox" name="crpt_category" id="crpt_category" <?php if ( $crp_settings['crpt_category'] ) echo 'checked="checked"' ?> /> <?php _e( 'Same categories', 'crp-taxonomy' ); ?></label><br />
 			<label><input type="checkbox" name="crpt_tag" id="crpt_tag" <?php if ( $crp_settings['crpt_tag'] ) echo 'checked="checked"' ?> /> <?php _e( 'Same tags', 'crp-taxonomy' ); ?></label><br />
+
+			<?php if ( ! empty( $wp_taxonomies ) ) : foreach( $wp_taxonomies as $taxonomy ) : ?>
+
+				<label><input type="checkbox" name="crpt_taxes[]" value="<?php echo $taxonomy; ?>" <?php if ( in_array( $taxonomy, $taxonomies ) ) echo 'checked="checked"' ?> /> <?php printf( __( 'Same %s', 'crp-taxonomy' ), $taxonomy ); ?></label><br />
+
+			<?php endforeach; endif; ?>
+
 			<p class="description"><?php _e( "Limit the related posts only to the current categories and/or tags of the current posts. This should add a greater degree of relevance.", 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>

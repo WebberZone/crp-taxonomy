@@ -48,6 +48,12 @@ function crpt_save_options( $crp_settings, $postvariable ) {
 
 	$crp_settings['crpt_taxes'] = implode( ",", $taxonomies );
 
+
+	/* Disable Contextual Matching */
+	$crp_settings['crpt_disable_contextual'] = ( isset( $postvariable['crpt_disable_contextual'] ) ? true : false );
+	$crp_settings['crpt_disable_contextual_cpt'] = ( isset( $postvariable['crpt_disable_contextual_cpt'] ) ? true : false );
+
+
 	return $crp_settings;
 }
 add_filter( 'crp_save_options', 'crpt_save_options', 10, 2 );
@@ -95,5 +101,39 @@ function crt_general_options( $crp_settings ) {
 <?php
 }
 add_action( 'crp_admin_general_options_after', 'crt_general_options' );
+
+
+/**
+ * Add options to CRP Settings > List Tuning Options.
+ *
+ * @since 1.1.0
+ *
+ * @param	array	$crp_settings	CRP Settings
+ */
+function crt_tuning_options( $crp_settings ) {
+?>
+
+	<tr><th scope="row"><?php _e( 'Disable contextual matching', 'crp-taxonomy' ); ?></th>
+		<td>
+			<label>
+				<input type="checkbox" name="crpt_disable_contextual" id="crpt_disable_contextual" <?php if ( $crp_settings['crpt_disable_contextual'] ) echo 'checked="checked"' ?> />
+			</label>
+
+			<p class="description"><?php _e( 'Selecting this option will turn off contextual matching. This is only useful if you activate the above option: "Fetch related posts only from above"', 'crp-taxonomy' ); ?></p>
+		</td>
+	</tr>
+	<tr><th scope="row"><?php _e( 'Disable contextual matching ONLY on attachments and custom post types', 'crp-taxonomy' ); ?></th>
+		<td>
+			<label>
+				<input type="checkbox" name="crpt_disable_contextual_cpt" id="crpt_disable_contextual_cpt" <?php if ( $crp_settings['crpt_disable_contextual_cpt'] ) echo 'checked="checked"' ?> />
+			</label>
+
+			<p class="description"><?php _e( "Applies only if the previous option is checked. Selecting this option with continue contextual matching of posts and pages", 'crp-taxonomy' ); ?></p>
+		</td>
+	</tr>
+
+<?php
+}
+add_action( 'crp_admin_tuning_options_before', 'crt_tuning_options' );
 
 ?>

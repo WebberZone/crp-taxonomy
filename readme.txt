@@ -28,13 +28,14 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 == Upgrade Notice ==
 
 = 1.0.0 =
-* Custom taxonomy support;
+* Custom taxonomy support; disable contextual matching;
 
 
 == Changelog ==
 
 = 1.1.0 =
 * New: Added support for custom taxonomies. Very useful if your custom post types have custom taxonomies
+* New: Disable contextual matching
 
 = 1.0.0 =
 * Initial release

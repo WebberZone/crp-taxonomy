@@ -27,7 +27,7 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.1.0 =
 * Custom taxonomy support; disable contextual matching;
 
 

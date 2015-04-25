@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contextual Related Posts Taxonomy Extender v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-25 19:28-0000\n"
-"PO-Revision-Date: 2015-04-25 19:29-0000\n"
+"POT-Creation-Date: 2015-04-25 19:33-0000\n"
+"PO-Revision-Date: 2015-04-25 19:33-0000\n"
 "Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
 "Language-Team:  <me@ajaydsouza.com>\n"
 "Language: en_US\n"
@@ -39,11 +39,10 @@ msgstr ""
 msgid "Same %s"
 msgstr ""
 
-# @ crp-taxonomy
 #: admin/admin.php:97
 msgid ""
-"Limit the related posts only to the current categories and/or tags of the "
-"current posts. This should add a greater degree of relevance."
+"Limit the related posts only to the current categories, tags and/or custom "
+"post types"
 msgstr ""
 
 #: admin/admin.php:116

@@ -94,7 +94,7 @@ function crt_general_options( $crp_settings ) {
 
 			<?php endforeach; endif; ?>
 
-			<p class="description"><?php _e( "Limit the related posts only to the current categories and/or tags of the current posts. This should add a greater degree of relevance.", 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php _e( "Limit the related posts only to the current categories, tags and/or custom post types", 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 

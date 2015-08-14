@@ -53,7 +53,7 @@ add_action( 'plugins_loaded', 'crpt_lang_init' );
 function crpt_crp_posts_join( $join ) {
 	global $wpdb, $crp_settings;
 
-	if ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] ) {
+	if ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) {
 		return $join . "
 			INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
 			INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
@@ -77,7 +77,7 @@ function crpt_crp_posts_where( $where ) {
 	global $wpdb, $post, $crp_settings;
 	$term_ids = $category_ids = $tag_ids = $taxonomies = array();
 
-	if ( ! $crp_settings['crpt_tag'] && ! $crp_settings['crpt_category'] ) {
+	if ( ! $crp_settings['crpt_tag'] && ! $crp_settings['crpt_category'] && ! $crp_settings['crpt_taxes'] ) {
 		return $where;
 	}
 

@@ -54,10 +54,15 @@ function crpt_crp_posts_join( $join ) {
 	global $wpdb, $crp_settings;
 
 	if ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) {
-		return $join . "
-			INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
-			INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
-		";
+		$sql = $join . "\n";
+		$sql .= "INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)\n";
+		$sql .= "INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)\n";
+
+		if ( $crp_settings['crpt_match_all'] ) {
+			$sql .= "INNER JOIN $wpdb->terms ON ($wpdb->term_taxonomy.term_id = $wpdb->terms.term_id)\n";
+		}
+
+		return $sql;
 	} else {
 		return $join;
 	}
@@ -93,18 +98,101 @@ function crpt_crp_posts_where( $where ) {
 		$taxonomies = array_merge( $taxonomies, explode( ",", $crp_settings['crpt_taxes'] ) );
 	}
 
-	$terms = wp_get_object_terms( $post->ID, $taxonomies );
+	// Get the terms for the current post
+	$terms    = wp_get_object_terms( $post->ID, $taxonomies );
 	$term_ids = wp_list_pluck( $terms, 'term_id' );
 
-	if ( empty( $term_ids ) ) {
+	if ( empty( $term_ids ) || is_wp_error( $terms ) ) {
 		return $where;
 	} else {
-		return $where . "
-			AND $wpdb->term_taxonomy.term_id IN (" . implode(',', array_unique( $term_ids ) ) . ")
-		";
+		if ( $crp_settings['crpt_match_all'] ) {
+			// Limit to posts matching all current taxonomy terms
+			$sql                     = '';
+			$term_strings            = array();
+			$selected_taxonomy_slugs = explode( ',', $crp_settings['crpt_taxes'] );
+
+			if ( count( $selected_taxonomy_slugs ) ) {
+				// Find the matching selected taxonomies
+				// Then add the term_id for that tax to the array
+				foreach ( $terms as $term ) {
+					if ( in_array( $term->taxonomy, $selected_taxonomy_slugs ) ) {
+						$term_strings[] = $wpdb->prepare( '%s', $term->taxonomy . '/' . $term->term_id );
+					}
+				}
+			}
+
+			// This SQL will match all posts that have the specified term_id in a particular taxonomy by converting
+			// the data into a string and matching against that.  Now this does return nearly the same results
+			// as if crpt_match_all was false, however a HAVING statement added later reduces the dataset down
+			// to only posts that match ALL the taxonomies.
+			$sql .= "AND CONCAT($wpdb->term_taxonomy.taxonomy, '/', $wpdb->terms.term_id) IN (\n";
+			$sql .= implode( ",\n", $term_strings );
+			$sql .= "\n)";
+		} else {
+			// Limit to posts matching any current taxonomy term
+			$tax_ids = implode( ',', array_unique( $term_ids ) );
+			$sql     = "AND $wpdb->term_taxonomy.term_id IN ($tax_ids)";
+		}
+
+		return $where . "\n" . $sql;
 	}
 }
 add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
+
+
+/**
+ * Filter GROUP BY clause of CRP query.
+ *
+ * @since 1.1.1
+ *
+ * @param  mixed  $groupby
+ * @return string Filtered CRP GROUP BY clause
+ */
+function crpt_crp_posts_groupby( $groupby ) {
+	global $wpdb, $crp_settings;
+
+	if ( $crp_settings['crpt_match_all'] && ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) ) {
+		$groupby .= " $wpdb->posts.ID\n";
+	}
+
+	return $groupby;
+}
+add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
+
+
+/**
+ * Filter HAVING clause of CRP query.
+ *
+ * @since 1.1.1
+ *
+ * @param  mixed  $having
+ * @return string Filtered CRP HAVING clause
+ */
+function crpt_crp_posts_having( $having ) {
+	global $crp_settings;
+
+	if ( $crp_settings['crpt_match_all'] ) {
+		$count = 0;
+
+		if ( $crp_settings['crpt_category'] ) {
+			$count++;
+		}
+
+		if ( $crp_settings['crpt_tag'] ) {
+			$count++;
+		}
+
+		if ( $crp_settings['crpt_taxes'] ) {
+			$taxonomies = explode( ",", $crp_settings['crpt_taxes'] );
+			$count += count( $taxonomies );
+		}
+
+		$having .= " COUNT(*) = $count\n";
+	}
+
+	return $having;
+}
+add_filter( 'crp_posts_having', 'crpt_crp_posts_having' );
 
 
 /**
@@ -132,7 +220,6 @@ function crpt_crp_posts_match( $match, $stuff, $postid ) {
 	}
 
 	return $match;
-
 }
 add_filter( 'crp_posts_match', 'crpt_crp_posts_match', 10, 3 );
 
@@ -148,10 +235,11 @@ add_filter( 'crp_posts_match', 'crpt_crp_posts_match', 10, 3 );
 function crpt_crp_default_options( $crp_settings ) {
 
 	$more_options = array(
-		'crpt_tag' => false,		// Restrict to current post's tags
-		'crpt_category' => false,	// Restrict to current post's categories
-		'crpt_taxes' => '',			// Restrict to custom taxonomies
-		'crpt_disable_contextual' => false,		// Disable contextual matching on all posts
+		'crpt_tag'                    => false,	// Restrict to current post's tags
+		'crpt_category'               => false,	// Restrict to current post's categories
+		'crpt_taxes'                  => '',		// Restrict to custom taxonomies
+		'crpt_match_all'              => false,	// Require all or only one of the taxonomy terms to match
+		'crpt_disable_contextual'     => false,	// Disable contextual matching on all posts
 		'crpt_disable_contextual_cpt' => true,	// Disable contextual matching on custom post types only
 	);
 	return	array_merge( $more_options, $crp_settings );
@@ -174,22 +262,22 @@ function crpt_activate( $network_wide ) {
 
     if ( is_multisite() && $network_wide ) {
 
-        // Get all blogs in the network and activate plugin on each one
-        $blog_ids = $wpdb->get_col( "
-        	SELECT blog_id FROM $wpdb->blogs
+		// Get all blogs in the network and activate plugin on each one
+		$blog_ids = $wpdb->get_col( "
+			SELECT blog_id FROM $wpdb->blogs
 			WHERE archived = '0' AND spam = '0' AND deleted = '0'
 		" );
-        foreach ( $blog_ids as $blog_id ) {
-        	switch_to_blog( $blog_id );
-			crpt_single_activate();
-        }
+				foreach ( $blog_ids as $blog_id ) {
+					switch_to_blog( $blog_id );
+					crpt_single_activate();
+				}
 
-        // Switch back to the current blog
-        restore_current_blog();
+		// Switch back to the current blog
+		restore_current_blog();
 
-    } else {
-        crp_single_activate();
-    }
+	} else {
+		crp_single_activate();
+	}
 }
 register_activation_hook( __FILE__, 'crpt_activate' );
 

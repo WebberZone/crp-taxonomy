@@ -125,6 +125,7 @@ function crpt_crp_posts_where( $where ) {
 			// the data into a string and matching against that.  Now this does return nearly the same results
 			// as if crpt_match_all was false, however a HAVING statement added later reduces the dataset down
 			// to only posts that match ALL the taxonomies.
+			// Credit for solution: http://wordpress.stackexchange.com/questions/8503/optimize-multiple-taxonomy-term-mysql-query
 			$sql .= "AND CONCAT($wpdb->term_taxonomy.taxonomy, '/', $wpdb->terms.term_id) IN (\n";
 			$sql .= implode( ",\n", $term_strings );
 			$sql .= "\n)";

@@ -38,19 +38,17 @@ function crpt_save_options( $crp_settings, $postvariable ) {
 		'public'   => true,
 		'_builtin' => false,
 	);
+
 	$output = 'names'; // or objects
 	$operator = 'and'; // 'and' or 'or'
 	$wp_taxonomies = get_taxonomies( $args, $output, $operator );
 
 	/* Save options for custom taxonomies */
 	$taxonomies = ( isset( $postvariable['crpt_taxes'] ) && is_array( $postvariable['crpt_taxes'] ) ) ? $postvariable['crpt_taxes'] : array();
-
 	$taxonomies = array_intersect( $wp_taxonomies, $taxonomies );
 
 	$crp_settings['crpt_taxes'] = implode( ",", $taxonomies );
-
-
-	/* Disable Contextual Matching */
+	$crp_settings['crpt_match_all'] = isset( $postvariable['crpt_match_all'] ) ? true : false;
 	$crp_settings['crpt_disable_contextual'] = ( isset( $postvariable['crpt_disable_contextual'] ) ? true : false );
 	$crp_settings['crpt_disable_contextual_cpt'] = ( isset( $postvariable['crpt_disable_contextual_cpt'] ) ? true : false );
 
@@ -74,14 +72,17 @@ function crt_general_options( $crp_settings ) {
 		'public'   => true,
 		'_builtin' => false,
 	);
+
 	$output = 'names'; // or objects
 	$operator = 'and'; // 'and' or 'or'
 	$wp_taxonomies = get_taxonomies( $args, $output, $operator );
 
 	$taxonomies = isset( $crp_settings['crpt_taxes'] ) ? explode( ",", $crp_settings['crpt_taxes'] ) : array();
-
 	$taxonomies = array_intersect( $taxonomies, $wp_taxonomies );
 
+	if ( !isset( $crp_settings['crpt_match_all'] ) ) {
+		$crp_settings['crpt_match_all'] = 'OR';
+	}
 ?>
 
 	<tr><th scope="row"><?php _e( 'Fetch related posts only from:', 'crp-taxonomy' ); ?></th>
@@ -95,7 +96,14 @@ function crt_general_options( $crp_settings ) {
 
 			<?php endforeach; endif; ?>
 
-			<p class="description"><?php _e( "Limit the related posts only to the current categories, tags and/or custom post types", 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php _e( "Limit the related posts only to the current categories, tags, and/or taxonomies.", 'crp-taxonomy' ); ?></p>
+		</td>
+	</tr>
+
+	<tr><th scope="row"><?php _e( 'Taxonomy matching:', 'crp-taxonomy' ); ?></th>
+		<td>
+			<label><input type="checkbox" name="crpt_match_all" id="crpt_match_all" <?php if ( $crp_settings['crpt_match_all'] ) echo 'checked="checked"' ?> /> <?php _e( 'Match all taxonomy terms', 'crp-taxonomy' ); ?></label><br />
+			<p class="description"><?php _e( 'If selected, will limit the related posts to ones that match all the taxonomy terms of the current post (for the above selected taxonomies) instead of just one of them.', 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 

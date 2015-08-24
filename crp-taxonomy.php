@@ -80,34 +80,43 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
  */
 function crpt_crp_posts_where( $where ) {
 	global $wpdb, $post, $crp_settings;
+
 	$term_ids = $category_ids = $tag_ids = $taxonomies = array();
 
-	if ( ! $crp_settings['crpt_tag'] && ! $crp_settings['crpt_category'] && ! $crp_settings['crpt_taxes'] ) {
+	if ( !$crp_settings['crpt_tag'] && !$crp_settings['crpt_category'] && !$crp_settings['crpt_taxes'] ) {
 		return $where;
 	}
 
+	// Temp variable used in crpt_crp_posts_having()
+	$crp_settings['crpt_taxonomy_count'] = 0;
+
 	if ( $crp_settings['crpt_category'] ) {
 		$taxonomies[] = 'category';
+		++$crp_settings['crpt_taxonomy_count'];
 	}
 
 	if ( $crp_settings['crpt_tag'] ) {
 		$taxonomies[] = 'post_tag';
+		++$crp_settings['crpt_taxonomy_count'];
 	}
 
 	if ( $crp_settings['crpt_taxes'] ) {
-		$taxonomies = array_merge( $taxonomies, explode( ",", $crp_settings['crpt_taxes'] ) );
+		$crpt_taxes = explode( ',', $crp_settings['crpt_taxes'] );
+		$crp_settings['crpt_taxonomy_count'] += count( $crpt_taxes );
+		$taxonomies = array_merge( $taxonomies, $crpt_taxes );
 	}
 
 	// Get the terms for the current post
-	$terms    = wp_get_object_terms( $post->ID, $taxonomies );
-	$term_ids = wp_list_pluck( $terms, 'term_id' );
+	$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
-	if ( empty( $term_ids ) || is_wp_error( $terms ) ) {
+	if ( is_wp_error( $terms ) || empty( $terms ) ) {
+		$crp_settings['crpt_taxonomy_count'] = 0;
 		return $where;
 	} else {
+		$sql = '';
+
 		if ( $crp_settings['crpt_match_all'] ) {
 			// Limit to posts matching all current taxonomy terms
-			$sql                     = '';
 			$term_strings            = array();
 			$selected_taxonomy_slugs = explode( ',', $crp_settings['crpt_taxes'] );
 
@@ -124,18 +133,28 @@ function crpt_crp_posts_where( $where ) {
 			// This SQL will match all posts that have the specified term_id in a particular taxonomy by converting
 			// the data into a string and matching against that.  Now this does return nearly the same results
 			// as if crpt_match_all was false, however a HAVING statement added later reduces the dataset down
-			// to only posts that match ALL the taxonomies.
+			// to only posts that match at least 1 term in each the taxonomy.
 			// Credit for solution: http://wordpress.stackexchange.com/questions/8503/optimize-multiple-taxonomy-term-mysql-query
-			$sql .= "AND CONCAT($wpdb->term_taxonomy.taxonomy, '/', $wpdb->terms.term_id) IN (\n";
-			$sql .= implode( ",\n", $term_strings );
-			$sql .= "\n)";
+			$term_count = count( $term_strings );
+
+			if ( $term_count ) {
+				$sql .= "AND CONCAT($wpdb->term_taxonomy.taxonomy, '/', $wpdb->terms.term_id) IN (";
+				$sql .= implode( ',', $term_strings );
+				$sql .= ')';
+			} else {
+				$crp_settings['crpt_taxonomy_count'] = 0;
+			}
 		} else {
 			// Limit to posts matching any current taxonomy term
-			$tax_ids = implode( ',', array_unique( $term_ids ) );
-			$sql     = "AND $wpdb->term_taxonomy.term_id IN ($tax_ids)";
+			$term_ids = array_unique( wp_list_pluck( $terms, 'term_id' ) );
+
+			if ( count( $term_ids ) ) {
+				$tax_ids = implode( ',', $term_ids );
+				$sql .= "AND $wpdb->term_taxonomy.term_id IN ($tax_ids)";
+			}
 		}
 
-		return $where . "\n" . $sql;
+		return $where . ' ' . $sql;
 	}
 }
 add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
@@ -153,7 +172,7 @@ function crpt_crp_posts_groupby( $groupby ) {
 	global $wpdb, $crp_settings;
 
 	if ( $crp_settings['crpt_match_all'] && ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) ) {
-		$groupby .= " $wpdb->posts.ID\n";
+		$groupby .= " $wpdb->posts.ID";
 	}
 
 	return $groupby;
@@ -170,30 +189,15 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
  * @return string Filtered CRP HAVING clause
  */
 function crpt_crp_posts_having( $having ) {
-	global $crp_settings;
+	global $wpdb, $crp_settings;
 
-	if ( $crp_settings['crpt_match_all'] ) {
-		$count = 0;
-
-		if ( $crp_settings['crpt_category'] ) {
-			$count++;
-		}
-
-		if ( $crp_settings['crpt_tag'] ) {
-			$count++;
-		}
-
-		if ( $crp_settings['crpt_taxes'] ) {
-			$taxonomies = explode( ",", $crp_settings['crpt_taxes'] );
-			$count += count( $taxonomies );
-		}
-
-		$having .= " COUNT(*) = $count\n";
+	if ( $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
+		$having .= $wpdb->prepare( " COUNT(DISTINCT $wpdb->term_taxonomy.taxonomy) = %d", $crp_settings['crpt_taxonomy_count'] );
 	}
 
 	return $having;
 }
-add_filter( 'crp_posts_having', 'crpt_crp_posts_having' );
+add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1);
 
 
 /**

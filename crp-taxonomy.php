@@ -15,7 +15,7 @@
  * Plugin Name: Contextual Related Posts Taxonomy Extender
  * Plugin URI: http://ajaydsouza.com/wordpress/plugins/crp-taxonomy/
  * Description: Adds new settings to Contextual Related Posts that allows you to restrict posts to the category or tag of the current post
- * Version: 1.1.0
+ * Version: 1.2.0-beta20150904
  * Author: Ajay D'Souza
  * Author URI: http://ajaydsouza.com
  * Text Domain: crp-taxonomy

@@ -4,7 +4,7 @@ Contributors: Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 3.5
-Tested up to: 4.2
+Tested up to: 4.4
 License: GPLv2 or later
 
 Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy.
@@ -27,15 +27,23 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 
 == Upgrade Notice ==
 
-= 1.1.0 =
-* Custom taxonomy support; disable contextual matching;
+= 1.2.0 =
+* New option to match all taxonomies; bug fixes;
 
 
 == Changelog ==
 
+= 1.2.0 =
+* Features:
+	*  Option to match by all taxonomies - Contributed by [Enchiridion](https://github.com/Enchiridion)
+
+* Bug fixes:
+	*  Filters not working when only taxonomies are being used - Contributed by [Enchiridion](https://github.com/Enchiridion)
+
 = 1.1.0 =
-* New: Added support for custom taxonomies. Very useful if your custom post types have custom taxonomies
-* New: Disable contextual matching
+* Features:
+	* Added support for custom taxonomies. Very useful if your custom post types have custom taxonomies
+	* Disable contextual matching
 
 = 1.0.0 =
 * Initial release

@@ -104,6 +104,7 @@ function crt_general_options( $crp_settings ) {
 		<td>
 			<label><input type="checkbox" name="crpt_match_all" id="crpt_match_all" <?php if ( $crp_settings['crpt_match_all'] ) echo 'checked="checked"' ?> /> <?php _e( 'Match all taxonomy terms', 'crp-taxonomy' ); ?></label><br />
 			<p class="description"><?php _e( 'If selected, will limit the related posts to ones that match all the taxonomy terms of the current post (for the above selected taxonomies) instead of just one of them.', 'crp-taxonomy' ); ?></p>
+			<p class="description highlight"><?php _e( "Note: This can result in no related posts being found when mixing categories and tags with custom taxonomies.", 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 
@@ -128,7 +129,7 @@ function crt_tuning_options( $crp_settings ) {
 				<input type="checkbox" name="crpt_disable_contextual" id="crpt_disable_contextual" <?php if ( $crp_settings['crpt_disable_contextual'] ) echo 'checked="checked"' ?> />
 			</label>
 
-			<p class="description"><?php _e( 'Selecting this option will turn off contextual matching. This is only useful if you activate the above option: "Fetch related posts only from above"', 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php _e( 'Selecting this option will turn off contextual matching. This is only useful if you activate the above option: "Fetch related posts only from above". Otherwise, you will end up with the same set of related posts on all pages.', 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 	<tr><th scope="row"><?php _e( 'Disable contextual matching ONLY on attachments and custom post types', 'crp-taxonomy' ); ?></th>
@@ -137,7 +138,7 @@ function crt_tuning_options( $crp_settings ) {
 				<input type="checkbox" name="crpt_disable_contextual_cpt" id="crpt_disable_contextual_cpt" <?php if ( $crp_settings['crpt_disable_contextual_cpt'] ) echo 'checked="checked"' ?> />
 			</label>
 
-			<p class="description"><?php _e( "Applies only if the previous option is checked. Selecting this option with continue contextual matching of posts and pages", 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php _e( "Applies only if the previous option is checked. Selecting this option will retain contextual matching for posts and pages but disable this on any custom post types.", 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 

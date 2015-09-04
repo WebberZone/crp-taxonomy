@@ -54,12 +54,12 @@ function crpt_crp_posts_join( $join ) {
 	global $wpdb, $crp_settings;
 
 	if ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) {
-		$sql = $join . "\n";
-		$sql .= "INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)\n";
-		$sql .= "INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)\n";
+		$sql = $join;
+		$sql .= " INNER JOIN $wpdb->term_relationships AS crpt_tr ON ($wpdb->posts.ID = crpt_tr.object_id) ";
+		$sql .= " INNER JOIN $wpdb->term_taxonomy AS crpt_tt ON (crpt_tr.term_taxonomy_id = crpt_tt.term_taxonomy_id) ";
 
 		if ( $crp_settings['crpt_match_all'] ) {
-			$sql .= "INNER JOIN $wpdb->terms ON ($wpdb->term_taxonomy.term_id = $wpdb->terms.term_id)\n";
+			$sql .= " INNER JOIN $wpdb->terms AS crpt_t ON (crpt_tt.term_id = crpt_t.term_id) ";
 		}
 
 		return $sql;
@@ -83,7 +83,8 @@ function crpt_crp_posts_where( $where ) {
 
 	$term_ids = $category_ids = $tag_ids = $taxonomies = array();
 
-	if ( !$crp_settings['crpt_tag'] && !$crp_settings['crpt_category'] && !$crp_settings['crpt_taxes'] ) {
+	// Return if we have no tag / category or taxonomy to be matched
+	if ( ! $crp_settings['crpt_tag'] && ! $crp_settings['crpt_category'] && ! $crp_settings['crpt_taxes'] ) {
 		return $where;
 	}
 
@@ -118,7 +119,7 @@ function crpt_crp_posts_where( $where ) {
 		if ( $crp_settings['crpt_match_all'] ) {
 			// Limit to posts matching all current taxonomy terms
 			$term_strings            = array();
-			$selected_taxonomy_slugs = explode( ',', $crp_settings['crpt_taxes'] );
+			$selected_taxonomy_slugs = $taxonomies;
 
 			if ( count( $selected_taxonomy_slugs ) ) {
 				// Find the matching selected taxonomies
@@ -138,7 +139,7 @@ function crpt_crp_posts_where( $where ) {
 			$term_count = count( $term_strings );
 
 			if ( $term_count ) {
-				$sql .= "AND CONCAT($wpdb->term_taxonomy.taxonomy, '/', $wpdb->terms.term_id) IN (";
+				$sql .= " AND CONCAT(crpt_tt.taxonomy, '/', crpt_t.term_id) IN (";
 				$sql .= implode( ',', $term_strings );
 				$sql .= ')';
 			} else {
@@ -150,7 +151,7 @@ function crpt_crp_posts_where( $where ) {
 
 			if ( count( $term_ids ) ) {
 				$tax_ids = implode( ',', $term_ids );
-				$sql .= "AND $wpdb->term_taxonomy.term_id IN ($tax_ids)";
+				$sql .= " AND crpt_tt.term_id IN ($tax_ids)";
 			}
 		}
 
@@ -163,7 +164,7 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
 /**
  * Filter GROUP BY clause of CRP query.
  *
- * @since 1.1.1
+ * @since	1.1.1
  *
  * @param  mixed  $groupby
  * @return string Filtered CRP GROUP BY clause
@@ -183,7 +184,7 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
 /**
  * Filter HAVING clause of CRP query.
  *
- * @since 1.1.1
+ * @since	1.2.0
  *
  * @param  mixed  $having
  * @return string Filtered CRP HAVING clause
@@ -192,7 +193,7 @@ function crpt_crp_posts_having( $having ) {
 	global $wpdb, $crp_settings;
 
 	if ( $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
-		$having .= $wpdb->prepare( " COUNT(DISTINCT $wpdb->term_taxonomy.taxonomy) = %d", $crp_settings['crpt_taxonomy_count'] );
+		$having .= $wpdb->prepare( " COUNT(DISTINCT crpt_tt.taxonomy) = %d", $crp_settings['crpt_taxonomy_count'] );
 	}
 
 	return $having;
@@ -281,7 +282,7 @@ function crpt_activate( $network_wide ) {
 		restore_current_blog();
 
 	} else {
-		crp_single_activate();
+		crpt_single_activate();
 	}
 }
 register_activation_hook( __FILE__, 'crpt_activate' );

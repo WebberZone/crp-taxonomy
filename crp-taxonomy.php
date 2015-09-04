@@ -119,13 +119,13 @@ function crpt_crp_posts_where( $where ) {
 		if ( $crp_settings['crpt_match_all'] ) {
 			// Limit to posts matching all current taxonomy terms
 			$term_strings            = array();
-			$selected_taxonomy_slugs = $taxonomies;
+			$selected_taxes = $taxonomies;
 
-			if ( count( $selected_taxonomy_slugs ) ) {
+			if ( count( $selected_taxes ) ) {
 				// Find the matching selected taxonomies
 				// Then add the term_id for that tax to the array
 				foreach ( $terms as $term ) {
-					if ( in_array( $term->taxonomy, $selected_taxonomy_slugs ) ) {
+					if ( in_array( $term->taxonomy, $selected_taxes ) ) {
 						$term_strings[] = $wpdb->prepare( '%s', $term->taxonomy . '/' . $term->term_id );
 					}
 				}
@@ -332,4 +332,3 @@ if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 
 } // End admin.inc
 
-?>

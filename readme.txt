@@ -1,6 +1,6 @@
-﻿=== Contextual Related Posts Taxonomy Tools ===
+=== Contextual Related Posts Taxonomy Tools ===
 Tags: related posts, related, similar posts, posts, custom post types, tags, categories
-Contributors: Ajay
+Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 3.5

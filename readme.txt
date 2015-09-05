@@ -7,51 +7,27 @@ Requires at least: 3.5
 Tested up to: 4.4
 License: GPLv2 or later
 
-Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy.
+Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy
 
 == Description ==
 
-<a href="http://ajaydsouza.com/wordpress/plugins/crp-taxonomy/">Contextual Related Posts</a> allows you to display highly relevant posts on your WordPress blog.
+[CRP Taxonomy Tools](https://webberzone.com/downloads/crp-taxonomy/) is an extension for [Contextual Related Posts](https://webberzone.com/plugins/contextual-related-posts/) that adds another degree of related posts matching by adding the option to restrict these related posts to the same category, tag or custom taxonomy. This plugin adds additional checkboxes under General options under the Related Posts page.
 
-CRP Taxonomy Tools gives you the option to restrict these related posts to the same category, tag or custom taxonomy of the current post or custom post type. The plugin adds checkboxes under General options under the Related Posts options page.
+Additionally, you can also disable the contextual matching engine either on posts/pages or on only custom post types.
 
 Requires Contextual Related Posts v2.0 or higher.
 
 
 = Contribute =
 
-Contextual Related Posts Taxonomy Tools is available on Github at https://github.com/ajaydsouza/crp-taxonomy
+Contextual Related Posts Taxonomy Tools is open for contribution on [Github](https://github.com/ajaydsouza/crp-taxonomy)
 
 So, if you've got some cool feature that you'd like to implement into the plugin or a bug you've been able to fix, consider forking the project and sending me a pull request.
 
 
-== Upgrade Notice ==
-
-= 1.2.0 =
-* New option to match all taxonomies; bug fixes;
-
-
-== Changelog ==
-
-= 1.2.0 =
-* Features:
-	*  Option to match by all taxonomies - Contributed by [Enchiridion](https://github.com/Enchiridion)
-
-* Bug fixes:
-	*  Filters not working when only taxonomies are being used - Contributed by [Enchiridion](https://github.com/Enchiridion)
-
-= 1.1.0 =
-* Features:
-	* Added support for custom taxonomies. Very useful if your custom post types have custom taxonomies
-	* Disable contextual matching
-
-= 1.0.0 =
-* Initial release
-
-
 == Installation ==
 
-= WordPress install =
+= WordPress install (the easy way) =
 1. Navigate to Plugins within your WordPress Admin Area
 
 2. Click "Add new" and in the search box enter "Contextual Related Posts Taxonomy Tools"
@@ -75,5 +51,30 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 
 == Frequently Asked Questions ==
 
-If your question isn't listed here, please post a comment at the <a href="http://wordpress.org/support/plugin/crp-taxonomy">WordPress.org support forum</a>. I monitor the forums on an ongoing basis. If you're looking for more advanced support, please see <a href="http://ajaydsouza.com/support/">details here</a>.
+If your question isn't listed here, please create a new post detailing your problem in the [WordPress.org support forum](http://wordpress.org/support/plugin/crp-taxonomy). It is the fastest way to get support as I monitor the forums regularly. I also provide [premium *paid* support via email](https://webberzone.com/support/).
+
+
+== Changelog ==
+
+= 1.2.0 =
+* Features:
+	* Option to match by all taxonomies - Contributed by [Enchiridion](https://github.com/Enchiridion)
+
+* Bug fixes:
+	* Filters not working when only taxonomies are being used - Contributed by [Enchiridion](https://github.com/Enchiridion)
+	* Activation of the plugin failed with Contextual Related Posts v2.2.x
+
+= 1.1.0 =
+* Features:
+	* Added support for custom taxonomies. Very useful if your custom post types have custom taxonomies
+	* Disable contextual matching
+
+= 1.0.0 =
+* Initial release
+
+
+== Upgrade Notice ==
+
+= 1.2.0 =
+* New option to match all taxonomies; bug fixes;
 

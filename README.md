@@ -6,7 +6,7 @@ __Tested up to:__ 4.4
 
 __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 
-__Plugin page:__ [Contextual Related Posts Taxonomy Tools](http://ajaydsouza.com/wordpress/plugins/crp-taxonomy/) | [WordPress.org plugin page](http://wordpress.org/plugins/crp-taxonomy/)
+__Plugin page:__ [Contextual Related Posts Taxonomy Tools](https://webberzone.com/downloads/crp-taxonomy/) | [WordPress.org plugin page](http://wordpress.org/plugins/crp-taxonomy/)
 
 Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy
 

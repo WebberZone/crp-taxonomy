@@ -1,28 +1,28 @@
 <?php
 /**
- * Contextual Related Posts Taxonomy Extender
+ * Contextual Related Posts Taxonomy Tools
  *
- * CRP Taxomy Extender adds extra options to CRP settings that allow you to
+ * CRP Taxomy Tools adds extra options to CRP settings that allow you to
  * restrict posts to the category or tag of the current post.
  *
  * @package		CRP_Taxonomy
  * @author		Ajay D'Souza <me@ajaydsouza.com>
  * @license		GPL-2.0+
- * @link		http://ajaydsouza.com
+ * @link		https://webberzone.com
  * @copyright 	2014-2015 Ajay D'Souza
  *
  * @wordpress-plugin
- * Plugin Name: Contextual Related Posts Taxonomy Extender
- * Plugin URI: http://ajaydsouza.com/wordpress/plugins/crp-taxonomy/
+ * Plugin Name: Contextual Related Posts Taxonomy Tools
+ * Plugin URI: https://webberzone.com/downloads/crp-taxonomy/
  * Description: Adds new settings to Contextual Related Posts that allows you to restrict posts to the category or tag of the current post
  * Version: 1.2.0-beta20150904
  * Author: Ajay D'Souza
- * Author URI: http://ajaydsouza.com
+ * Author URI: https://webberzone.com
  * Text Domain: crp-taxonomy
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path: /languages
- * GitHub Plugin URI: https://github.com/ajaydsouza/crp-taxonomy/
+ * GitHub Plugin URI: https://github.com/WebberZone/crp-taxonomy/
  */
 
 // If this file is called directly, abort.

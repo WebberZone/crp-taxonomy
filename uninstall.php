@@ -5,7 +5,7 @@
  * @package		CRP_Taxonomy
  * @author		Ajay D'Souza <me@ajaydsouza.com>
  * @license		GPL-2.0+
- * @link		http://ajaydsouza.com
+ * @link		https://webberzone.com
  * @copyright	2014 Ajay D'Souza
  */
 

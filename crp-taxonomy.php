@@ -15,7 +15,7 @@
  * Plugin Name: Contextual Related Posts Taxonomy Tools
  * Plugin URI: https://webberzone.com/downloads/crp-taxonomy/
  * Description: Adds new settings to Contextual Related Posts that allows you to restrict posts to the category or tag of the current post
- * Version: 1.2.0
+ * Version: 1.2.1-beta1
  * Author: Ajay D'Souza
  * Author URI: https://webberzone.com
  * Text Domain: crp-taxonomy
@@ -172,7 +172,7 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
 function crpt_crp_posts_groupby( $groupby ) {
 	global $wpdb, $crp_settings;
 
-	if ( $crp_settings['crpt_match_all'] && ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) ) {
+	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) ) {
 		$groupby .= " $wpdb->posts.ID";
 	}
 
@@ -192,7 +192,7 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
 function crpt_crp_posts_having( $having ) {
 	global $wpdb, $crp_settings;
 
-	if ( $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
+	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
 		$having .= $wpdb->prepare( " COUNT(DISTINCT crpt_tt.taxonomy) = %d", $crp_settings['crpt_taxonomy_count'] );
 	}
 

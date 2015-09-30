@@ -47,7 +47,7 @@ add_action( 'plugins_loaded', 'crpt_lang_init' );
  *
  * @since 1.0.0
  *
- * @param	mixed	$join
+ * @param	mixed $join
  * @return	string	Filtered CRP JOIN clause
  */
 function crpt_crp_posts_join( $join ) {
@@ -75,7 +75,7 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
  *
  * @since 1.0.0
  *
- * @param	mixed	$where
+ * @param	mixed $where
  * @return	string	Filtered CRP WHERE clause
  */
 function crpt_crp_posts_where( $where ) {
@@ -166,7 +166,7 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
  *
  * @since	1.1.1
  *
- * @param  mixed  $groupby
+ * @param  mixed $groupby
  * @return string Filtered CRP GROUP BY clause
  */
 function crpt_crp_posts_groupby( $groupby ) {
@@ -186,19 +186,19 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
  *
  * @since	1.2.0
  *
- * @param  mixed  $having
+ * @param  mixed $having
  * @return string Filtered CRP HAVING clause
  */
 function crpt_crp_posts_having( $having ) {
 	global $wpdb, $crp_settings;
 
 	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
-		$having .= $wpdb->prepare( " COUNT(DISTINCT crpt_tt.taxonomy) = %d", $crp_settings['crpt_taxonomy_count'] );
+		$having .= $wpdb->prepare( ' COUNT(DISTINCT crpt_tt.taxonomy) = %d', $crp_settings['crpt_taxonomy_count'] );
 	}
 
 	return $having;
 }
-add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1);
+add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1 );
 
 
 /**
@@ -206,7 +206,7 @@ add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1);
  *
  * @since 1.1.0
  *
- * @param	array	$crp_settings	CRP Settings
+ * @param	array $crp_settings   CRP Settings
  * @return	array	Filtered array of CRP Settings
  */
 function crpt_crp_posts_match( $match, $stuff, $postid ) {
@@ -235,7 +235,7 @@ add_filter( 'crp_posts_match', 'crpt_crp_posts_match', 10, 3 );
  *
  * @since 1.0.0
  *
- * @param	array	$crp_settings	CRP Settings
+ * @param	array $crp_settings   CRP Settings
  * @return	array	Filtered array of CRP Settings
  */
 function crpt_crp_default_options( $crp_settings ) {
@@ -258,25 +258,25 @@ add_filter( 'crp_default_options', 'crpt_crp_default_options' );
  *
  * @since 1.0.0
  *
- * @param    boolean    $network_wide    True if WPMU superadmin uses
- *                                       "Network Activate" action, false if
- *                                       WPMU is disabled or plugin is
- *                                       activated on an individual blog.
+ * @param    boolean $network_wide    True if WPMU superadmin uses
+ *                                    "Network Activate" action, false if
+ *                                    WPMU is disabled or plugin is
+ *                                    activated on an individual blog.
  */
 function crpt_activate( $network_wide ) {
-    global $wpdb;
+	global $wpdb;
 
-    if ( is_multisite() && $network_wide ) {
+	if ( is_multisite() && $network_wide ) {
 
 		// Get all blogs in the network and activate plugin on each one
 		$blog_ids = $wpdb->get_col( "
 			SELECT blog_id FROM $wpdb->blogs
 			WHERE archived = '0' AND spam = '0' AND deleted = '0'
 		" );
-				foreach ( $blog_ids as $blog_id ) {
-					switch_to_blog( $blog_id );
-					crpt_single_activate();
-				}
+		foreach ( $blog_ids as $blog_id ) {
+			switch_to_blog( $blog_id );
+			crpt_single_activate();
+		}
 
 		// Switch back to the current blog
 		restore_current_blog();
@@ -306,7 +306,7 @@ function crpt_single_activate() {
  *
  * @since 1.0.0
  *
- * @param    int    $blog_id    ID of the new blog.
+ * @param    int $blog_id    ID of the new blog.
  */
 function crpt_activate_new_site( $blog_id ) {
 
@@ -322,7 +322,8 @@ function crpt_activate_new_site( $blog_id ) {
 add_action( 'wpmu_new_blog', 'crpt_activate_new_site' );
 
 
-/*----------------------------------------------------------------------------*
+/*
+ ----------------------------------------------------------------------------*
  * Dashboard and Administrative Functionality
  *----------------------------------------------------------------------------*/
 

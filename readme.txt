@@ -3,8 +3,8 @@ Tags: related posts, related, similar posts, posts, custom post types, tags, cat
 Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 3.5
-Tested up to: 4.4
+Requires at least: 4.1
+Tested up to: 4.8
 License: GPLv2 or later
 
 Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy

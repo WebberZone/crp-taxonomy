@@ -56,6 +56,10 @@ If your question isn't listed here, please create a new post detailing your prob
 
 == Changelog ==
 
+= 1.2.1 =
+* Bug fixes:
+	* Fixed PHP notices
+
 = 1.2.0 =
 * Features:
 	* Option to match by all taxonomies - Contributed by [Enchiridion](https://github.com/Enchiridion)
@@ -75,6 +79,6 @@ If your question isn't listed here, please create a new post detailing your prob
 
 == Upgrade Notice ==
 
-= 1.2.0 =
-* New option to match all taxonomies; bug fixes;
-
+= 1.2.1 =
+* Bug fixes;
+Check Changelog for detailed updates

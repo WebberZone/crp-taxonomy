@@ -53,19 +53,20 @@ add_action( 'plugins_loaded', 'crpt_lang_init' );
 function crpt_crp_posts_join( $join ) {
 	global $wpdb, $crp_settings;
 
-	if ( $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) {
-		$sql = $join;
-		$sql .= " INNER JOIN $wpdb->term_relationships AS crpt_tr ON ($wpdb->posts.ID = crpt_tr.object_id) ";
-		$sql .= " INNER JOIN $wpdb->term_taxonomy AS crpt_tt ON (crpt_tr.term_taxonomy_id = crpt_tt.term_taxonomy_id) ";
-
-		if ( $crp_settings['crpt_match_all'] ) {
-			$sql .= " INNER JOIN $wpdb->terms AS crpt_t ON (crpt_tt.term_id = crpt_t.term_id) ";
-		}
-
-		return $sql;
-	} else {
+	// Return if we have no tag / category or taxonomy to be matched.
+	if ( empty( $crp_settings['crpt_tag'] ) && empty( $crp_settings['crpt_category'] ) && empty( $crp_settings['crpt_taxes'] ) ) {
 		return $join;
 	}
+
+	$sql = $join;
+	$sql .= " INNER JOIN $wpdb->term_relationships AS crpt_tr ON ($wpdb->posts.ID = crpt_tr.object_id) ";
+	$sql .= " INNER JOIN $wpdb->term_taxonomy AS crpt_tt ON (crpt_tr.term_taxonomy_id = crpt_tt.term_taxonomy_id) ";
+
+	if ( $crp_settings['crpt_match_all'] ) {
+		$sql .= " INNER JOIN $wpdb->terms AS crpt_t ON (crpt_tt.term_id = crpt_t.term_id) ";
+	}
+
+	return $sql;
 }
 add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
 
@@ -84,7 +85,7 @@ function crpt_crp_posts_where( $where ) {
 	$term_ids = $taxonomies = array();
 
 	// Return if we have no tag / category or taxonomy to be matched.
-	if ( ! $crp_settings['crpt_tag'] && ! $crp_settings['crpt_category'] && ! $crp_settings['crpt_taxes'] ) {
+	if ( empty( $crp_settings['crpt_tag'] ) && empty( $crp_settings['crpt_category'] ) && empty( $crp_settings['crpt_taxes'] ) ) {
 		return $where;
 	}
 
@@ -216,7 +217,7 @@ function crpt_crp_posts_match( $match, $stuff, $postid ) {
 
 	$post_type = get_post_type( $postid );
 
-	if ( $crp_settings['crpt_disable_contextual'] ) {
+	if ( isset( $crp_settings['crpt_disable_contextual'] ) && $crp_settings['crpt_disable_contextual'] ) {
 
 		/* If post or page and we're not disabling custom post types */
 		if ( ( 'post' === $post_type || 'page' === $post_type ) && ( $crp_settings['crpt_disable_contextual_cpt'] ) ) {

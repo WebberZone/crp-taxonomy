@@ -22,8 +22,8 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since 1.0.0
  *
- * @param	array $crp_settings   CRP Settings
- * @param	array $postvariable   $_POST array
+ * @param	array $crp_settings   CRP Settings.
+ * @param	array $postvariable   $_POST array.
  * @return	array	Filtered CRP settings
  */
 function crpt_save_options( $crp_settings, $postvariable ) {
@@ -38,8 +38,8 @@ function crpt_save_options( $crp_settings, $postvariable ) {
 		'_builtin' => false,
 	);
 
-	$output = 'names'; // or objects
-	$operator = 'and'; // 'and' or 'or'
+	$output = 'names';
+	$operator = 'and';
 	$wp_taxonomies = get_taxonomies( $args, $output, $operator );
 
 	/* Save options for custom taxonomies */
@@ -62,7 +62,7 @@ add_filter( 'crp_save_options', 'crpt_save_options', 10, 2 );
  *
  * @since 1.0.0
  *
- * @param	array $crp_settings   CRP Settings
+ * @param	array $crp_settings   CRP Settings.
  */
 function crt_general_options( $crp_settings ) {
 
@@ -71,8 +71,8 @@ function crt_general_options( $crp_settings ) {
 		'_builtin' => false,
 	);
 
-	$output = 'names'; // or objects
-	$operator = 'and'; // 'and' or 'or'
+	$output = 'names';
+	$operator = 'and';
 	$wp_taxonomies = get_taxonomies( $args, $output, $operator );
 
 	$taxonomies = isset( $crp_settings['crpt_taxes'] ) ? explode( ',', $crp_settings['crpt_taxes'] ) : array();
@@ -83,27 +83,27 @@ function crt_general_options( $crp_settings ) {
 	}
 ?>
 
-	<tr><th scope="row"><?php _e( 'Fetch related posts only from:', 'crp-taxonomy' ); ?></th>
+	<tr><th scope="row"><?php esc_html_e( 'Fetch related posts only from', 'crp-taxonomy' ); ?>:</th>
 		<td>
-			<label><input type="checkbox" name="crpt_category" id="crpt_category" <?php if ( $crp_settings['crpt_category'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Same categories', 'crp-taxonomy' ); ?></label><br />
-			<label><input type="checkbox" name="crpt_tag" id="crpt_tag" <?php if ( $crp_settings['crpt_tag'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Same tags', 'crp-taxonomy' ); ?></label><br />
+			<label><input type="checkbox" name="crpt_category" id="crpt_category" <?php if ( $crp_settings['crpt_category'] ) { echo 'checked="checked"'; } ?> /> <?php esc_html_e( 'Same categories', 'crp-taxonomy' ); ?></label><br />
+			<label><input type="checkbox" name="crpt_tag" id="crpt_tag" <?php if ( $crp_settings['crpt_tag'] ) { echo 'checked="checked"'; } ?> /> <?php esc_html_e( 'Same tags', 'crp-taxonomy' ); ?></label><br />
 
 			<?php if ( ! empty( $wp_taxonomies ) ) : foreach ( $wp_taxonomies as $taxonomy ) : ?>
 
-				<label><input type="checkbox" name="crpt_taxes[]" value="<?php echo $taxonomy; ?>" <?php if ( in_array( $taxonomy, $taxonomies ) ) { echo 'checked="checked"'; } ?> /> <?php printf( __( 'Same %s', 'crp-taxonomy' ), $taxonomy ); ?></label><br />
+				<label><input type="checkbox" name="crpt_taxes[]" value="<?php echo $taxonomy; ?>" <?php if ( in_array( $taxonomy, $taxonomies ) ) { echo 'checked="checked"'; } ?> /> <?php printf( esc_html__( 'Same %s', 'crp-taxonomy' ), $taxonomy ); ?></label><br />
 
 			<?php endforeach;
 endif; ?>
 
-			<p class="description"><?php _e( 'Limit the related posts only to the current categories, tags, and/or taxonomies.', 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Limit the related posts only to the current categories, tags, and/or taxonomies.', 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 
-	<tr><th scope="row"><?php _e( 'Taxonomy matching:', 'crp-taxonomy' ); ?></th>
+	<tr><th scope="row"><?php esc_html_e( 'Taxonomy matching:', 'crp-taxonomy' ); ?></th>
 		<td>
-			<label><input type="checkbox" name="crpt_match_all" id="crpt_match_all" <?php if ( $crp_settings['crpt_match_all'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Match all taxonomy terms', 'crp-taxonomy' ); ?></label><br />
-			<p class="description"><?php _e( 'If selected, will limit the related posts to ones that match all the taxonomy terms of the current post (for the above selected taxonomies) instead of just one of them.', 'crp-taxonomy' ); ?></p>
-			<p class="description highlight"><?php _e( 'Note: This can result in no related posts being found when mixing categories and tags with custom taxonomies.', 'crp-taxonomy' ); ?></p>
+			<label><input type="checkbox" name="crpt_match_all" id="crpt_match_all" <?php if ( $crp_settings['crpt_match_all'] ) { echo 'checked="checked"'; } ?> /> <?php esc_html_e( 'Match all taxonomy terms', 'crp-taxonomy' ); ?></label><br />
+			<p class="description"><?php esc_html_e( 'If selected, will limit the related posts to ones that match all the taxonomy terms of the current post (for the above selected taxonomies) instead of just one of them.', 'crp-taxonomy' ); ?></p>
+			<p class="description highlight"><?php esc_html_e( 'Note: This can result in no related posts being found when mixing categories and tags with custom taxonomies.', 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 
@@ -117,27 +117,27 @@ add_action( 'crp_admin_general_options_after', 'crt_general_options' );
  *
  * @since 1.1.0
  *
- * @param	array $crp_settings   CRP Settings
+ * @param	array $crp_settings   CRP Settings.
  */
 function crt_tuning_options( $crp_settings ) {
 ?>
 
-	<tr><th scope="row"><?php _e( 'Disable contextual matching', 'crp-taxonomy' ); ?></th>
+	<tr><th scope="row"><?php esc_html_e( 'Disable contextual matching', 'crp-taxonomy' ); ?></th>
 		<td>
 			<label>
 				<input type="checkbox" name="crpt_disable_contextual" id="crpt_disable_contextual" <?php if ( $crp_settings['crpt_disable_contextual'] ) { echo 'checked="checked"'; } ?> />
 			</label>
 
-			<p class="description"><?php _e( 'Selecting this option will turn off contextual matching. This is only useful if you activate the above option: "Fetch related posts only from above". Otherwise, you will end up with the same set of related posts on all pages.', 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Selecting this option will turn off contextual matching. This is only useful if you activate the above option: "Fetch related posts only from above". Otherwise, you will end up with the same set of related posts on all pages.', 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
-	<tr><th scope="row"><?php _e( 'Disable contextual matching ONLY on attachments and custom post types', 'crp-taxonomy' ); ?></th>
+	<tr><th scope="row"><?php esc_html_e( 'Disable contextual matching ONLY on attachments and custom post types', 'crp-taxonomy' ); ?></th>
 		<td>
 			<label>
 				<input type="checkbox" name="crpt_disable_contextual_cpt" id="crpt_disable_contextual_cpt" <?php if ( $crp_settings['crpt_disable_contextual_cpt'] ) { echo 'checked="checked"'; } ?> />
 			</label>
 
-			<p class="description"><?php _e( 'Applies only if the previous option is checked. Selecting this option will retain contextual matching for posts and pages but disable this on any custom post types.', 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Applies only if the previous option is checked. Selecting this option will retain contextual matching for posts and pages but disable this on any custom post types.', 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 

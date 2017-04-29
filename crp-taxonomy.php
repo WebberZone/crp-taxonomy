@@ -47,7 +47,7 @@ add_action( 'plugins_loaded', 'crpt_lang_init' );
  *
  * @since 1.0.0
  *
- * @param	mixed $join
+ * @param	string $join JOIN clause.
  * @return	string	Filtered CRP JOIN clause
  */
 function crpt_crp_posts_join( $join ) {
@@ -75,20 +75,20 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
  *
  * @since 1.0.0
  *
- * @param	mixed $where
+ * @param	string $where WHERE clause.
  * @return	string	Filtered CRP WHERE clause
  */
 function crpt_crp_posts_where( $where ) {
 	global $wpdb, $post, $crp_settings;
 
-	$term_ids = $category_ids = $tag_ids = $taxonomies = array();
+	$term_ids = $taxonomies = array();
 
-	// Return if we have no tag / category or taxonomy to be matched
+	// Return if we have no tag / category or taxonomy to be matched.
 	if ( ! $crp_settings['crpt_tag'] && ! $crp_settings['crpt_category'] && ! $crp_settings['crpt_taxes'] ) {
 		return $where;
 	}
 
-	// Temp variable used in crpt_crp_posts_having()
+	// Temp variable used in crpt_crp_posts_having().
 	$crp_settings['crpt_taxonomy_count'] = 0;
 
 	if ( $crp_settings['crpt_category'] ) {
@@ -107,7 +107,7 @@ function crpt_crp_posts_where( $where ) {
 		$taxonomies = array_merge( $taxonomies, $crpt_taxes );
 	}
 
-	// Get the terms for the current post
+	// Get the terms for the current post.
 	$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
 	if ( is_wp_error( $terms ) || empty( $terms ) ) {
@@ -117,13 +117,13 @@ function crpt_crp_posts_where( $where ) {
 		$sql = '';
 
 		if ( $crp_settings['crpt_match_all'] ) {
-			// Limit to posts matching all current taxonomy terms
+			// Limit to posts matching all current taxonomy terms.
 			$term_strings            = array();
 			$selected_taxes = $taxonomies;
 
 			if ( count( $selected_taxes ) ) {
 				// Find the matching selected taxonomies
-				// Then add the term_id for that tax to the array
+				// Then add the term_id for that tax to the array.
 				foreach ( $terms as $term ) {
 					if ( in_array( $term->taxonomy, $selected_taxes ) ) {
 						$term_strings[] = $wpdb->prepare( '%s', $term->taxonomy . '/' . $term->term_id );
@@ -135,7 +135,7 @@ function crpt_crp_posts_where( $where ) {
 			// the data into a string and matching against that.  Now this does return nearly the same results
 			// as if crpt_match_all was false, however a HAVING statement added later reduces the dataset down
 			// to only posts that match at least 1 term in each the taxonomy.
-			// Credit for solution: http://wordpress.stackexchange.com/questions/8503/optimize-multiple-taxonomy-term-mysql-query
+			// Credit for solution: http://wordpress.stackexchange.com/questions/8503/optimize-multiple-taxonomy-term-mysql-query.
 			$term_count = count( $term_strings );
 
 			if ( $term_count ) {
@@ -146,7 +146,7 @@ function crpt_crp_posts_where( $where ) {
 				$crp_settings['crpt_taxonomy_count'] = 0;
 			}
 		} else {
-			// Limit to posts matching any current taxonomy term
+			// Limit to posts matching any current taxonomy term.
 			$term_ids = array_unique( wp_list_pluck( $terms, 'term_id' ) );
 
 			if ( count( $term_ids ) ) {
@@ -166,7 +166,7 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
  *
  * @since	1.1.1
  *
- * @param  mixed $groupby
+ * @param  string $groupby GROUP BY clause.
  * @return string Filtered CRP GROUP BY clause
  */
 function crpt_crp_posts_groupby( $groupby ) {
@@ -186,7 +186,7 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
  *
  * @since	1.2.0
  *
- * @param  mixed $having
+ * @param  string $having HAVING clause.
  * @return string Filtered CRP HAVING clause
  */
 function crpt_crp_posts_having( $having ) {
@@ -202,12 +202,14 @@ add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1 );
 
 
 /**
- * Add options to CRP Settings array.
+ * Disable FULLTEXT matching.
  *
  * @since 1.1.0
  *
- * @param	array $crp_settings   CRP Settings
- * @return	array	Filtered array of CRP Settings
+ * @param array      $match MATCH clause.
+ * @param string     $stuff Content being matched.
+ * @param int|string $postid Post ID.
+ * @return array Filtered array of CRP Settings
  */
 function crpt_crp_posts_match( $match, $stuff, $postid ) {
 	global $crp_settings;
@@ -217,7 +219,7 @@ function crpt_crp_posts_match( $match, $stuff, $postid ) {
 	if ( $crp_settings['crpt_disable_contextual'] ) {
 
 		/* If post or page and we're not disabling custom post types */
-		if ( ( 'post' == $post_type || 'page' == $post_type ) && ( $crp_settings['crpt_disable_contextual_cpt'] ) ) {
+		if ( ( 'post' === $post_type || 'page' === $post_type ) && ( $crp_settings['crpt_disable_contextual_cpt'] ) ) {
 			return $match;
 		}
 
@@ -235,18 +237,18 @@ add_filter( 'crp_posts_match', 'crpt_crp_posts_match', 10, 3 );
  *
  * @since 1.0.0
  *
- * @param	array $crp_settings   CRP Settings
+ * @param	array $crp_settings   CRP Settings.
  * @return	array	Filtered array of CRP Settings
  */
 function crpt_crp_default_options( $crp_settings ) {
 
 	$more_options = array(
-		'crpt_tag'                    => false,	// Restrict to current post's tags
-		'crpt_category'               => false,	// Restrict to current post's categories
-		'crpt_taxes'                  => '',		// Restrict to custom taxonomies
-		'crpt_match_all'              => false,	// Require all or only one of the taxonomy terms to match
-		'crpt_disable_contextual'     => false,	// Disable contextual matching on all posts
-		'crpt_disable_contextual_cpt' => true,	// Disable contextual matching on custom post types only
+		'crpt_tag'                    => false,	// Restrict to current post's tags.
+		'crpt_category'               => false,	// Restrict to current post's categories.
+		'crpt_taxes'                  => '',		// Restrict to custom taxonomies.
+		'crpt_match_all'              => false,	// Require all or only one of the taxonomy terms to match.
+		'crpt_disable_contextual'     => false,	// Disable contextual matching on all posts.
+		'crpt_disable_contextual_cpt' => true,	// Disable contextual matching on custom post types only.
 	);
 	return	array_merge( $more_options, $crp_settings );
 }
@@ -268,7 +270,7 @@ function crpt_activate( $network_wide ) {
 
 	if ( is_multisite() && $network_wide ) {
 
-		// Get all blogs in the network and activate plugin on each one
+		// Get all blogs in the network and activate plugin on each one.
 		$blog_ids = $wpdb->get_col( "
 			SELECT blog_id FROM $wpdb->blogs
 			WHERE archived = '0' AND spam = '0' AND deleted = '0'
@@ -278,7 +280,7 @@ function crpt_activate( $network_wide ) {
 			crpt_single_activate();
 		}
 
-		// Switch back to the current blog
+		// Switch back to the current blog.
 		restore_current_blog();
 
 	} else {
@@ -295,8 +297,8 @@ register_activation_hook( __FILE__, 'crpt_activate' );
  */
 function crpt_single_activate() {
 
-	// Loop through crp_read_options to ensure that our options are added across the network
-	$crp_settings = crp_read_options();
+	// Loop through crp_read_options to ensure that our options are added across the network.
+	crp_read_options();
 
 }
 
@@ -325,7 +327,8 @@ add_action( 'wpmu_new_blog', 'crpt_activate_new_site' );
 /*
  ----------------------------------------------------------------------------*
  * Dashboard and Administrative Functionality
- *----------------------------------------------------------------------------*/
+ *----------------------------------------------------------------------------
+*/
 
 if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 

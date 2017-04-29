@@ -16,13 +16,16 @@ cache:
   - $HOME/.composer/cache
 
 matrix:
+  fast_finish: true
   include:
+    - php: hhvm
+      env: WP_VERSION=latest
     - php: 7.1
       env: WP_VERSION=latest
     - php: 7.0
       env: WP_VERSION=latest
     - php: 5.6
-      env: WP_VERSION=3.5
+      env: WP_VERSION=4.0
     - php: 5.6
       env: WP_VERSION=latest
     - php: 5.6
@@ -31,6 +34,13 @@ matrix:
       env: WP_TRAVISCI=phpcs
     - php: 5.3
       env: WP_VERSION=latest
+
+  allow_failures:
+    # Allow failures for unstable builds.
+    - php: nightly
+    - php: hhvm
+    - env: WP_VERSION=master
+    - env: WP_TRAVISCI=phpcs
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"

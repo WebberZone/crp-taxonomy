@@ -1,4 +1,10 @@
-﻿# Contextual Related Posts Taxonomy Tools
+﻿[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/crp-taxonomy.svg?style=flat-square)](https://wordpress.org/plugins/crp-taxonomy/)
+[![License](https://img.shields.io/badge/license-GPL_v2%2B-orange.svg?style=flat-square)](http://opensource.org/licenses/GPL-2.0)
+[![WordPress Tested](https://img.shields.io/wordpress/v/crp-taxonomy.svg?style=flat-square)](https://wordpress.org/plugins/crp-taxonomy/)
+[![Build Status](https://travis-ci.org/WebberZone/crp-taxonomy.svg?branch=master)](https://travis-ci.org/WebberZone/crp-taxonomy)
+[![Code Climate](https://codeclimate.com/github/WebberZone/crp-taxonomy/badges/gpa.svg)](https://codeclimate.com/github/WebberZone/crp-taxonomy)
+
+# Contextual Related Posts Taxonomy Tools
 
 __Requires:__ 4.1
 

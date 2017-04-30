@@ -85,14 +85,14 @@ function crt_general_options( $crp_settings ) {
 
 	<tr><th scope="row"><?php esc_html_e( 'Fetch related posts only from', 'crp-taxonomy' ); ?>:</th>
 		<td>
-			<label><input type="checkbox" name="crpt_category" id="crpt_category" <?php if ( $crp_settings['crpt_category'] ) { echo 'checked="checked"'; } ?> /> <?php esc_html_e( 'Same categories', 'crp-taxonomy' ); ?></label><br />
-			<label><input type="checkbox" name="crpt_tag" id="crpt_tag" <?php if ( $crp_settings['crpt_tag'] ) { echo 'checked="checked"'; } ?> /> <?php esc_html_e( 'Same tags', 'crp-taxonomy' ); ?></label><br />
+			<label><input type="checkbox" name="crpt_category" id="crpt_category" <?php checked( $crp_settings['crpt_category'], true ); ?> /> <?php esc_html_e( 'Same categories', 'crp-taxonomy' ); ?></label><br />
+			<label><input type="checkbox" name="crpt_tag" id="crpt_tag" <?php checked( $crp_settings['crpt_tag'], true ); ?> /> <?php esc_html_e( 'Same tags', 'crp-taxonomy' ); ?></label><br />
 
 			<?php if ( ! empty( $wp_taxonomies ) ) : foreach ( $wp_taxonomies as $taxonomy ) : ?>
 
 				<label>
 					<input type="checkbox" name="crpt_taxes[]" value="<?php echo $taxonomy; ?>"
-					<?php if ( in_array( $taxonomy, $taxonomies ) ) { echo 'checked="checked"'; } ?> />
+					<?php checked( in_array( $taxonomy, $taxonomies, true ), true ); ?> />
 					<?php /* translators: taxonomy. */
 						printf( esc_html__( 'Same %s', 'crp-taxonomy' ), $taxonomy );
 					?>
@@ -107,7 +107,7 @@ endif; ?>
 
 	<tr><th scope="row"><?php esc_html_e( 'Taxonomy matching:', 'crp-taxonomy' ); ?></th>
 		<td>
-			<label><input type="checkbox" name="crpt_match_all" id="crpt_match_all" <?php if ( $crp_settings['crpt_match_all'] ) { echo 'checked="checked"'; } ?> /> <?php esc_html_e( 'Match all taxonomy terms', 'crp-taxonomy' ); ?></label><br />
+			<label><input type="checkbox" name="crpt_match_all" id="crpt_match_all" <?php checked( $crp_settings['crpt_match_all'], true ); ?> /> <?php esc_html_e( 'Match all taxonomy terms', 'crp-taxonomy' ); ?></label><br />
 			<p class="description"><?php esc_html_e( 'If selected, will limit the related posts to ones that match all the taxonomy terms of the current post (for the above selected taxonomies) instead of just one of them.', 'crp-taxonomy' ); ?></p>
 			<p class="description highlight"><?php esc_html_e( 'Note: This can result in no related posts being found when mixing categories and tags with custom taxonomies.', 'crp-taxonomy' ); ?></p>
 		</td>

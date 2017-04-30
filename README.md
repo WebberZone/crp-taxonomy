@@ -27,7 +27,7 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 
 
 ## Screenshots
-![General Options](https://raw.github.com/ajaydsouza/crp-taxonomy/master/assets/screenshot-1.png)
+![General Options](https://raw.github.com/ajaydsouza/crp-taxonomy/master/wporg-assets/screenshot-1.png)
 
 _Contextual Related Posts Taxonomy Tools Options_
 

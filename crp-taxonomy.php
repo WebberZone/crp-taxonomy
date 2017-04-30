@@ -82,7 +82,8 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
 function crpt_crp_posts_where( $where ) {
 	global $wpdb, $post, $crp_settings;
 
-	$term_ids = $taxonomies = array();
+	$term_ids = array();
+	$taxonomies = array();
 
 	// Return if we have no tag / category or taxonomy to be matched.
 	if ( empty( $crp_settings['crpt_tag'] ) && empty( $crp_settings['crpt_category'] ) && empty( $crp_settings['crpt_taxes'] ) ) {

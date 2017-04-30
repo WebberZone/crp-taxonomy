@@ -90,7 +90,13 @@ function crt_general_options( $crp_settings ) {
 
 			<?php if ( ! empty( $wp_taxonomies ) ) : foreach ( $wp_taxonomies as $taxonomy ) : ?>
 
-				<label><input type="checkbox" name="crpt_taxes[]" value="<?php echo $taxonomy; ?>" <?php if ( in_array( $taxonomy, $taxonomies ) ) { echo 'checked="checked"'; } ?> /> <?php printf( esc_html__( 'Same %s', 'crp-taxonomy' ), $taxonomy ); ?></label><br />
+				<label>
+					<input type="checkbox" name="crpt_taxes[]" value="<?php echo $taxonomy; ?>"
+					<?php if ( in_array( $taxonomy, $taxonomies ) ) { echo 'checked="checked"'; } ?> />
+					<?php /* translators: taxonomy. */
+						printf( esc_html__( 'Same %s', 'crp-taxonomy' ), $taxonomy );
+					?>
+				</label><br />
 
 			<?php endforeach;
 endif; ?>

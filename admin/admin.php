@@ -108,8 +108,8 @@ endif; ?>
 	<tr><th scope="row"><?php esc_html_e( 'Taxonomy matching:', 'crp-taxonomy' ); ?></th>
 		<td>
 			<label><input type="checkbox" name="crpt_match_all" id="crpt_match_all" <?php checked( $crp_settings['crpt_match_all'], true ); ?> /> <?php esc_html_e( 'Match all taxonomy terms', 'crp-taxonomy' ); ?></label><br />
-			<p class="description"><?php esc_html_e( 'If selected, will limit the related posts to ones that match all the taxonomy terms of the current post (for the above selected taxonomies) instead of just one of them.', 'crp-taxonomy' ); ?></p>
-			<p class="description highlight"><?php esc_html_e( 'Note: This can result in no related posts being found when mixing categories and tags with custom taxonomies.', 'crp-taxonomy' ); ?></p>
+			<p class="description"><?php esc_html_e( 'If selected, will limit the related posts to ones that match all the above selected taxonomy terms of the current post instead of just one of them.', 'crp-taxonomy' ); ?></p>
+			<p class="description highlight"><?php esc_html_e( 'Note: This can result in no related posts being found.', 'crp-taxonomy' ); ?></p>
 		</td>
 	</tr>
 

@@ -90,24 +90,24 @@ function crpt_crp_posts_where( $where ) {
 		return $where;
 	}
 
-	// Temp variable used in crpt_crp_posts_having().
-	$crp_settings['crpt_taxonomy_count'] = 0;
-
 	if ( $crp_settings['crpt_category'] ) {
 		$taxonomies[] = 'category';
-		++$crp_settings['crpt_taxonomy_count'];
 	}
 
 	if ( $crp_settings['crpt_tag'] ) {
 		$taxonomies[] = 'post_tag';
-		++$crp_settings['crpt_taxonomy_count'];
 	}
 
 	if ( $crp_settings['crpt_taxes'] ) {
 		$crpt_taxes = explode( ',', $crp_settings['crpt_taxes'] );
-		$crp_settings['crpt_taxonomy_count'] += count( $crpt_taxes );
 		$taxonomies = array_merge( $taxonomies, $crpt_taxes );
 	}
+
+	// Get the taxonomies used by the post type.
+	$current_taxonomies = get_object_taxonomies( $post );
+
+	// Temp variable used in crpt_crp_posts_having(). We only want to limit this for taxonomies linked to the current post type.
+	$crp_settings['crpt_taxonomy_count'] = count( array_intersect( $current_taxonomies, $taxonomies ) );
 
 	// Get the terms for the current post.
 	$terms = wp_get_object_terms( $post->ID, $taxonomies );
@@ -120,7 +120,7 @@ function crpt_crp_posts_where( $where ) {
 
 		if ( $crp_settings['crpt_match_all'] ) {
 			// Limit to posts matching all current taxonomy terms.
-			$term_strings            = array();
+			$term_strings = array();
 			$selected_taxes = $taxonomies;
 
 			if ( count( $selected_taxes ) ) {
@@ -133,11 +133,11 @@ function crpt_crp_posts_where( $where ) {
 				}
 			}
 
+			// Credit for solution: http://wordpress.stackexchange.com/questions/8503/optimize-multiple-taxonomy-term-mysql-query
 			// This SQL will match all posts that have the specified term_id in a particular taxonomy by converting
 			// the data into a string and matching against that.  Now this does return nearly the same results
 			// as if crpt_match_all was false, however a HAVING statement added later reduces the dataset down
 			// to only posts that match at least 1 term in each the taxonomy.
-			// Credit for solution: http://wordpress.stackexchange.com/questions/8503/optimize-multiple-taxonomy-term-mysql-query.
 			$term_count = count( $term_strings );
 
 			if ( $term_count ) {

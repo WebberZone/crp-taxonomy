@@ -56,7 +56,10 @@ If your question isn't listed here, please create a new post detailing your prob
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.3.0 =
+* Enhancements:
+	* When "Match all taxonomy terms" is selected, only taxonomies for the current post type is selected. This reduces the cases where no posts are found. Posts are also now properly ranked by relevancy
+
 * Bug fixes:
 	* Fixed PHP notices
 

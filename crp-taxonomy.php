@@ -15,7 +15,7 @@
  * Plugin Name: Contextual Related Posts Taxonomy Tools
  * Plugin URI: https://webberzone.com/downloads/crp-taxonomy/
  * Description: Adds new settings to Contextual Related Posts that allows you to restrict posts to the category or tag of the current post
- * Version: 1.2.1-beta1
+ * Version: 1.3.0-beta1
  * Author: Ajay D'Souza
  * Author URI: https://webberzone.com
  * Text Domain: crp-taxonomy
@@ -48,7 +48,7 @@ add_action( 'plugins_loaded', 'crpt_lang_init' );
  * @since 1.0.0
  *
  * @param	string $join JOIN clause.
- * @return	string	Filtered CRP JOIN clause
+ * @return	string	Filtered JOIN clause
  */
 function crpt_crp_posts_join( $join ) {
 	global $wpdb, $crp_settings;
@@ -77,7 +77,7 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
  * @since 1.0.0
  *
  * @param	string $where WHERE clause.
- * @return	string	Filtered CRP WHERE clause
+ * @return	string	Filtered WHERE clause
  */
 function crpt_crp_posts_where( $where ) {
 	global $wpdb, $post, $crp_settings;
@@ -169,7 +169,7 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
  * @since	1.1.1
  *
  * @param  string $groupby GROUP BY clause.
- * @return string Filtered CRP GROUP BY clause
+ * @return string Filtered GROUP BY clause
  */
 function crpt_crp_posts_groupby( $groupby ) {
 	global $wpdb, $crp_settings;
@@ -184,12 +184,37 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
 
 
 /**
+ * Filter ORDER BY clause of CRP query.
+ *
+ * @since	1.3.0
+ *
+ * @param  string $orderby ORDER BY clause.
+ * @return string Filtered ORDER BY clause
+ */
+function crpt_crp_posts_orderby( $orderby ) {
+	global $wpdb, $crp_settings;
+
+	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
+
+		// Add a comma if $orderby is not empty.
+		if ( ! empty( $orderby ) ) {
+			$orderby .= ',';
+		}
+		$orderby .= $crp_settings['crp_posts_match'] . ' DESC ';
+	}
+
+	return $orderby;
+}
+add_filter( 'crp_posts_orderby', 'crpt_crp_posts_orderby', 10, 1 );
+
+
+/**
  * Filter HAVING clause of CRP query.
  *
  * @since	1.2.0
  *
  * @param  string $having HAVING clause.
- * @return string Filtered CRP HAVING clause
+ * @return string Filtered HAVING clause
  */
 function crpt_crp_posts_having( $having ) {
 	global $wpdb, $crp_settings;
@@ -215,6 +240,12 @@ add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1 );
  */
 function crpt_crp_posts_match( $match, $stuff, $postid ) {
 	global $crp_settings;
+
+	// If matching all taxonomies, we store $match temporarily so it can be globally accessed.
+	if ( false !== strpos( $match, 'AND' ) ) {
+	    $match_no_and = substr_replace( $match, '', strpos( $match, 'AND' ), 3 );
+	}
+	$crp_settings['crp_posts_match'] = $match_no_and;
 
 	$post_type = get_post_type( $postid );
 

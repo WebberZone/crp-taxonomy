@@ -151,4 +151,3 @@ function crt_tuning_options( $crp_settings ) {
 }
 add_action( 'crp_admin_tuning_options_before', 'crt_tuning_options' );
 
-?>

@@ -15,7 +15,7 @@
  * Plugin Name: Contextual Related Posts Taxonomy Tools
  * Plugin URI: https://webberzone.com/downloads/crp-taxonomy/
  * Description: Adds new settings to Contextual Related Posts that allows you to restrict posts to the category or tag of the current post
- * Version: 1.3.0-beta1
+ * Version: 1.3.0
  * Author: Ajay D'Souza
  * Author URI: https://webberzone.com
  * Text Domain: crp-taxonomy

@@ -82,6 +82,6 @@ If your question isn't listed here, please create a new post detailing your prob
 
 == Upgrade Notice ==
 
-= 1.2.1 =
-* Bug fixes;
+= 1.3.0 =
+* Bug fixes; Optimisation when selecting "Match all taxonomy terms";
 Check Changelog for detailed updates

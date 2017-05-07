@@ -90,7 +90,7 @@ function crpt_crp_posts_where( $where ) {
 				// Find the matching selected taxonomies
 				// Then add the term_id for that tax to the array.
 				foreach ( $terms as $term ) {
-					if ( in_array( $term->taxonomy, $selected_taxes ) ) {
+					if ( in_array( $term->taxonomy, $selected_taxes, true ) ) {
 						$term_strings[] = $wpdb->prepare( '%s', $term->taxonomy . '/' . $term->term_id );
 					}
 				}
@@ -155,7 +155,7 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
  * @return string Filtered ORDER BY clause
  */
 function crpt_crp_posts_orderby( $orderby ) {
-	global $wpdb, $crp_settings;
+	global $crp_settings;
 
 	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
 

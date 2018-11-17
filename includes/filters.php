@@ -10,8 +10,8 @@
  *
  * @since 1.0.0
  *
- * @param	string $join JOIN clause.
- * @return	string	Filtered JOIN clause
+ * @param   string $join JOIN clause.
+ * @return  string  Filtered JOIN clause
  */
 function crpt_crp_posts_join( $join ) {
 	global $wpdb, $crp_settings;
@@ -21,7 +21,7 @@ function crpt_crp_posts_join( $join ) {
 		return $join;
 	}
 
-	$sql = $join;
+	$sql  = $join;
 	$sql .= " INNER JOIN $wpdb->term_relationships AS crpt_tr ON ($wpdb->posts.ID = crpt_tr.object_id) ";
 	$sql .= " INNER JOIN $wpdb->term_taxonomy AS crpt_tt ON (crpt_tr.term_taxonomy_id = crpt_tt.term_taxonomy_id) ";
 
@@ -39,13 +39,13 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
  *
  * @since 1.0.0
  *
- * @param	string $where WHERE clause.
- * @return	string	Filtered WHERE clause
+ * @param   string $where WHERE clause.
+ * @return  string  Filtered WHERE clause
  */
 function crpt_crp_posts_where( $where ) {
 	global $wpdb, $post, $crp_settings;
 
-	$term_ids = array();
+	$term_ids   = array();
 	$taxonomies = array();
 
 	// Return if we have no tag / category or taxonomy to be matched.
@@ -83,7 +83,7 @@ function crpt_crp_posts_where( $where ) {
 
 		if ( $crp_settings['crpt_match_all'] ) {
 			// Limit to posts matching all current taxonomy terms.
-			$term_strings = array();
+			$term_strings   = array();
 			$selected_taxes = $taxonomies;
 
 			if ( count( $selected_taxes ) ) {
@@ -116,7 +116,7 @@ function crpt_crp_posts_where( $where ) {
 
 			if ( count( $term_ids ) ) {
 				$tax_ids = implode( ',', $term_ids );
-				$sql .= " AND crpt_tt.term_id IN ($tax_ids)";
+				$sql    .= " AND crpt_tt.term_id IN ($tax_ids)";
 			}
 		}// End if().
 
@@ -129,7 +129,7 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
 /**
  * Filter GROUP BY clause of CRP query.
  *
- * @since	1.1.1
+ * @since   1.1.1
  *
  * @param  string $groupby GROUP BY clause.
  * @return string Filtered GROUP BY clause
@@ -149,7 +149,7 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
 /**
  * Filter ORDER BY clause of CRP query.
  *
- * @since	1.3.0
+ * @since   1.3.0
  *
  * @param  string $orderby ORDER BY clause.
  * @return string Filtered ORDER BY clause
@@ -174,7 +174,7 @@ add_filter( 'crp_posts_orderby', 'crpt_crp_posts_orderby', 10, 1 );
 /**
  * Filter HAVING clause of CRP query.
  *
- * @since	1.2.0
+ * @since   1.2.0
  *
  * @param  string $having HAVING clause.
  * @return string Filtered HAVING clause
@@ -206,7 +206,7 @@ function crpt_crp_posts_match( $match, $stuff, $postid ) {
 
 	// If matching all taxonomies, we store $match temporarily so it can be globally accessed.
 	if ( false !== strpos( $match, 'AND' ) ) {
-	    $match_no_and = substr_replace( $match, '', strpos( $match, 'AND' ), 3 );
+		$match_no_and = substr_replace( $match, '', strpos( $match, 'AND' ), 3 );
 	}
 	$crp_settings['crp_posts_match'] = $match_no_and;
 

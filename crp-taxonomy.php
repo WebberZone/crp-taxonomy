@@ -5,11 +5,11 @@
  * CRP Taxomy Tools adds extra options to CRP settings that allow you to
  * restrict posts to the category or tag of the current post.
  *
- * @package		CRP_Taxonomy
- * @author		Ajay D'Souza <me@ajaydsouza.com>
- * @license		GPL-2.0+
- * @link		https://webberzone.com
- * @copyright 	2014-2015 Ajay D'Souza
+ * @package     CRP_Taxonomy
+ * @author      Ajay D'Souza <me@ajaydsouza.com>
+ * @license     GPL-2.0+
+ * @link        https://webberzone.com
+ * @copyright   2014-2015 Ajay D'Souza
  *
  * @wordpress-plugin
  * Plugin Name: Contextual Related Posts Taxonomy Tools
@@ -70,20 +70,20 @@ if ( ! defined( 'CRPT_PLUGIN_FILE' ) ) {
  *
  * @since 1.0.0
  *
- * @param	array $crp_settings   CRP Settings.
- * @return	array	Filtered array of CRP Settings
+ * @param   array $crp_settings   CRP Settings.
+ * @return  array   Filtered array of CRP Settings
  */
 function crpt_crp_default_options( $crp_settings ) {
 
 	$more_options = array(
-		'crpt_tag'                    => false,	// Restrict to current post's tags.
-		'crpt_category'               => false,	// Restrict to current post's categories.
-		'crpt_taxes'                  => '',		// Restrict to custom taxonomies.
-		'crpt_match_all'              => false,	// Require all or only one of the taxonomy terms to match.
-		'crpt_disable_contextual'     => false,	// Disable contextual matching on all posts.
-		'crpt_disable_contextual_cpt' => true,	// Disable contextual matching on custom post types only.
+		'crpt_tag'                    => false, // Restrict to current post's tags.
+		'crpt_category'               => false, // Restrict to current post's categories.
+		'crpt_taxes'                  => '',        // Restrict to custom taxonomies.
+		'crpt_match_all'              => false, // Require all or only one of the taxonomy terms to match.
+		'crpt_disable_contextual'     => false, // Disable contextual matching on all posts.
+		'crpt_disable_contextual_cpt' => true,  // Disable contextual matching on custom post types only.
 	);
-	return	array_merge( $more_options, $crp_settings );
+	return  array_merge( $more_options, $crp_settings );
 }
 add_filter( 'crp_default_options', 'crpt_crp_default_options' );
 

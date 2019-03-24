@@ -5,6 +5,11 @@
  * @package CRP_Taxonomy
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Filter JOIN clause of CRP query to add taxonomy tables.
  *

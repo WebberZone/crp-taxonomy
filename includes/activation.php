@@ -5,6 +5,11 @@
  * @package CRP_Taxonomy
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Fired for each blog when the plugin is activated.
  *

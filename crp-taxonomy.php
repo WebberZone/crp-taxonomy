@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Holds the filesystem directory path (with trailing slash) for Contextual Related Posts.
  *
- * @since 2.3.0
+ * @since 1.0.0
  *
  * @var string Plugin Root File
  */
@@ -47,7 +47,7 @@ if ( ! defined( 'CRPT_PLUGIN_FILE' ) ) {
 /**
  * Holds the filesystem directory path (with trailing slash) for Contextual Related Posts.
  *
- * @since 2.3.0
+ * @since 1.0.0
  *
  * @var string Plugin folder path
  */
@@ -58,36 +58,13 @@ if ( ! defined( 'CRPT_PLUGIN_DIR' ) ) {
 /**
  * Holds the filesystem directory path (with trailing slash) for Contextual Related Posts.
  *
- * @since 2.3.0
+ * @since 1.0.0
  *
  * @var string Plugin folder URL
  */
 if ( ! defined( 'CRPT_PLUGIN_URL' ) ) {
 	define( 'CRPT_PLUGIN_URL', plugin_dir_url( CRPT_PLUGIN_FILE ) );
 }
-
-/**
- * Add options to CRP Settings array.
- *
- * @since 1.0.0
- *
- * @param   array $crp_settings   CRP Settings.
- * @return  array   Filtered array of CRP Settings
- */
-function crpt_crp_default_options( $crp_settings ) {
-
-	$more_options = array(
-		'crpt_tag'                    => false, // Restrict to current post's tags.
-		'crpt_category'               => false, // Restrict to current post's categories.
-		'crpt_taxes'                  => '',        // Restrict to custom taxonomies.
-		'crpt_match_all'              => false, // Require all or only one of the taxonomy terms to match.
-		'crpt_disable_contextual'     => false, // Disable contextual matching on all posts.
-		'crpt_disable_contextual_cpt' => true,  // Disable contextual matching on custom post types only.
-	);
-	return array_merge( $more_options, $crp_settings );
-}
-add_filter( 'crp_default_options', 'crpt_crp_default_options' );
-
 
 /*
  *---------------------------------------------------------------------------*
@@ -98,6 +75,7 @@ add_filter( 'crp_default_options', 'crpt_crp_default_options' );
 require_once CRPT_PLUGIN_DIR . 'includes/activation.php';
 require_once CRPT_PLUGIN_DIR . 'includes/filters.php';
 require_once CRPT_PLUGIN_DIR . 'includes/l10n.php';
+require_once CRPT_PLUGIN_DIR . 'includes/deprecated.php';
 
 /*
  *---------------------------------------------------------------------------*

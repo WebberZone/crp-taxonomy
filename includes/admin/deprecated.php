@@ -27,6 +27,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function crpt_save_options( $crp_settings, $postvariable ) {
 
+	_deprecated_function( __FUNCTION__, '1.4.0' );
+
 	/* Save options for categories and tags */
 	$crp_settings['crpt_tag']      = ( isset( $postvariable['crpt_tag'] ) ? true : false );
 	$crp_settings['crpt_category'] = ( isset( $postvariable['crpt_category'] ) ? true : false );
@@ -66,6 +68,8 @@ add_filter( 'crp_save_options', 'crpt_save_options', 10, 2 );
  */
 function crt_general_options( $crp_settings ) {
 
+	_deprecated_function( __FUNCTION__, '1.4.0' );
+
 	$args = array(
 		'public'   => true,
 		'_builtin' => false,
@@ -94,17 +98,16 @@ function crt_general_options( $crp_settings ) {
 					?>
 
 				<label>
-					<input type="checkbox" name="crpt_taxes[]" value="<?php echo esc_attr( $taxonomy ); ?>"
-									<?php checked( in_array( $taxonomy, $taxonomies, true ), true ); ?> />
-									<?php
-									/* translators: taxonomy. */
-										printf( esc_html__( 'Same %s', 'crp-taxonomy' ), esc_attr( $taxonomy ) );
-									?>
+					<input type="checkbox" name="crpt_taxes[]" value="<?php echo esc_attr( $taxonomy ); ?>" <?php checked( in_array( $taxonomy, $taxonomies, true ), true ); ?> />
+					<?php
+					/* translators: taxonomy. */
+						printf( esc_html__( 'Same %s', 'crp-taxonomy' ), esc_attr( $taxonomy ) );
+					?>
 				</label><br />
 
-							<?php
-			endforeach;
-endif;
+					<?php
+				endforeach;
+			endif;
 			?>
 
 			<p class="description"><?php esc_html_e( 'Limit the related posts only to the current categories, tags, and/or taxonomies.', 'crp-taxonomy' ); ?></p>
@@ -133,6 +136,9 @@ add_action( 'crp_admin_general_options_after', 'crt_general_options' );
  * @param   array $crp_settings   CRP Settings.
  */
 function crt_tuning_options( $crp_settings ) {
+
+	_deprecated_function( __FUNCTION__, '1.4.0' );
+
 	?>
 
 	<tr><th scope="row"><?php esc_html_e( 'Disable contextual matching', 'crp-taxonomy' ); ?></th>

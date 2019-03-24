@@ -6,7 +6,6 @@
  * @author      Ajay D'Souza
  * @license     GPL-2.0+
  * @link        https://webberzone.com
- * @copyright   2014 Ajay D'Souza
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {

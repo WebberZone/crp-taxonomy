@@ -1,8 +1,6 @@
 <?php
 /**
- * CRP Taxonomy Admin interface.
- *
- * This page is accessible via Settings > Contextual Related Posts >
+ * CRP Taxonomy Admin deprecated functions.
  *
  * @package     CRP_Taxonomy
  * @author      Ajay D'Souza
@@ -21,6 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Save the new options.
  *
  * @since 1.0.0
+ * @deprecated 1.4.0
  *
  * @param   array $crp_settings   CRP Settings.
  * @param   array $postvariable   $_POST array.
@@ -61,6 +60,7 @@ add_filter( 'crp_save_options', 'crpt_save_options', 10, 2 );
  * Add options to CRP Settings > General Options.
  *
  * @since 1.0.0
+ * @deprecated 1.4.0
  *
  * @param   array $crp_settings   CRP Settings.
  */
@@ -128,6 +128,7 @@ add_action( 'crp_admin_general_options_after', 'crt_general_options' );
  * Add options to CRP Settings > List Tuning Options.
  *
  * @since 1.1.0
+ * @deprecated 1.4.0
  *
  * @param   array $crp_settings   CRP Settings.
  */

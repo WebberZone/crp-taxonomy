@@ -85,7 +85,8 @@ require_once CRPT_PLUGIN_DIR . 'includes/deprecated.php';
 
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
-	require_once CRPT_PLUGIN_DIR . 'admin/admin.php';
+	require_once CRPT_PLUGIN_DIR . 'includes/admin/admin.php';
+	require_once CRPT_PLUGIN_DIR . 'includes/admin/deprecated.php';
 
 }
 

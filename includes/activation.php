@@ -54,8 +54,10 @@ register_activation_hook( CRPT_PLUGIN_FILE, 'crpt_activate' );
  */
 function crpt_single_activate() {
 
-	// Loop through crp_read_options to ensure that our options are added across the network.
-	crp_read_options();
+	if ( ! function_exists( 'crp_get_settings' ) ) {
+		// Loop through crp_read_options to ensure that our options are added across the network.
+		crp_read_options();
+	}
 
 }
 
@@ -65,7 +67,7 @@ function crpt_single_activate() {
  *
  * @since 1.0.0
  *
- * @param    int $blog_id    ID of the new blog.
+ * @param int $blog_id ID of the new blog.
  */
 function crpt_activate_new_site( $blog_id ) {
 

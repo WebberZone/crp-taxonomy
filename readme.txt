@@ -1,4 +1,4 @@
-=== Contextual Related Posts Taxonomy Tools ===
+=== Related Posts by Categories and Tags ===
 Tags: related posts, related, similar posts, posts, custom post types, tags, categories
 Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
@@ -20,7 +20,7 @@ Requires Contextual Related Posts v2.0 or higher.
 
 = Contribute =
 
-Contextual Related Posts Taxonomy Tools is open for contribution on [Github](https://github.com/ajaydsouza/crp-taxonomy)
+Related Posts by Categories and Tags is open for contribution on [Github](https://github.com/ajaydsouza/crp-taxonomy)
 
 So, if you've got some cool feature that you'd like to implement into the plugin or a bug you've been able to fix, consider forking the project and sending me a pull request.
 
@@ -30,7 +30,7 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 = WordPress install (the easy way) =
 1. Navigate to Plugins within your WordPress Admin Area
 
-2. Click "Add new" and in the search box enter "Contextual Related Posts Taxonomy Tools"
+2. Click "Add new" and in the search box enter "Related Posts by Categories and Tags"
 
 3. Find the plugin in the list (usually the first result) and click "Install Now"
 

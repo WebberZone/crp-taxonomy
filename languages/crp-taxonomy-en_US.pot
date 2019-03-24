@@ -1,11 +1,11 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Contextual Related Posts Taxonomy Tools\n"
+"Project-Id-Version: Related Posts by Categories and Tags\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-07 13:07+0100\n"
 "PO-Revision-Date: 2017-05-07 13:07+0100\n"
-"Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
+"Last-Translator: Ajay D'Souza\n"
 "Language-Team: me@ajaydsouza.com\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"

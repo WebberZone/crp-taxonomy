@@ -3,7 +3,7 @@
  * Fired when the plugin is uninstalled
  *
  * @package     CRP_Taxonomy
- * @author      Ajay D'Souza <me@ajaydsouza.com>
+ * @author      Ajay D'Souza
  * @license     GPL-2.0+
  * @link        https://webberzone.com
  * @copyright   2014 Ajay D'Souza

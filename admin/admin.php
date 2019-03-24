@@ -5,10 +5,10 @@
  * This page is accessible via Settings > Contextual Related Posts >
  *
  * @package     CRP_Taxonomy
- * @author      Ajay D'Souza <me@ajaydsouza.com>
+ * @author      Ajay D'Souza
  * @license     GPL-2.0+
  * @link        https://webberzone.com
- * @copyright   2014-2015 Ajay D'Souza
+ * @copyright   2014-2019 Ajay D'Souza
  */
 
 // If this file is called directly, abort.
@@ -137,12 +137,12 @@ function crt_tuning_options( $crp_settings ) {
 	<tr><th scope="row"><?php esc_html_e( 'Disable contextual matching', 'crp-taxonomy' ); ?></th>
 		<td>
 			<label>
-				<input type="checkbox" name="crpt_disable_contextual" id="crpt_disable_contextual" 
+				<input type="checkbox" name="crpt_disable_contextual" id="crpt_disable_contextual"
 				<?php
 				if ( $crp_settings['crpt_disable_contextual'] ) {
 					echo 'checked="checked"'; }
 				?>
-				 />
+				/>
 			</label>
 
 			<p class="description"><?php esc_html_e( 'Selecting this option will turn off contextual matching. This is only useful if you activate the above option: "Fetch related posts only from above". Otherwise, you will end up with the same set of related posts on all pages.', 'crp-taxonomy' ); ?></p>
@@ -151,12 +151,12 @@ function crt_tuning_options( $crp_settings ) {
 	<tr><th scope="row"><?php esc_html_e( 'Disable contextual matching ONLY on attachments and custom post types', 'crp-taxonomy' ); ?></th>
 		<td>
 			<label>
-				<input type="checkbox" name="crpt_disable_contextual_cpt" id="crpt_disable_contextual_cpt" 
+				<input type="checkbox" name="crpt_disable_contextual_cpt" id="crpt_disable_contextual_cpt"
 				<?php
 				if ( $crp_settings['crpt_disable_contextual_cpt'] ) {
 					echo 'checked="checked"'; }
 				?>
-				 />
+				/>
 			</label>
 
 			<p class="description"><?php esc_html_e( 'Applies only if the previous option is checked. Selecting this option will retain contextual matching for posts and pages but disable this on any custom post types.', 'crp-taxonomy' ); ?></p>

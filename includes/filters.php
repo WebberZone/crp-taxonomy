@@ -128,10 +128,10 @@ function crpt_crp_posts_where( $where ) {
 				$tax_ids = implode( ',', $term_ids );
 				$sql    .= " AND crpt_tt.term_id IN ($tax_ids)";
 			}
-		}// End if().
+		}
 
 		return $where . ' ' . $sql;
-	}// End if().
+	}
 }
 add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
 

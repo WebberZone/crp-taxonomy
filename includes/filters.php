@@ -147,7 +147,12 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
 function crpt_crp_posts_groupby( $groupby ) {
 	global $wpdb, $crp_settings;
 
-	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && ( $crp_settings['crpt_same_taxes'] || $crp_settings['crpt_tag'] || $crp_settings['crpt_category'] || $crp_settings['crpt_taxes'] ) ) {
+	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && (
+		! empty( $crp_settings['crpt_same_taxes'] ) ||
+		! empty( $crp_settings['crpt_tag'] ) ||
+		! empty( $crp_settings['crpt_category'] ) ||
+		! empty( $crp_settings['crpt_taxes'] )
+		) ) {
 		$groupby .= " $wpdb->posts.ID";
 	}
 

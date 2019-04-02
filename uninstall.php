@@ -15,34 +15,54 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 global $wpdb, $crp_settings;
 
-$option_name = 'ald_crp_settings';
-
-if ( ! is_multisite() ) {
-
-	unset( $crp_settings['crpt_tag'] );
-	unset( $crp_settings['crpt_category'] );
-	update_option( $option_name, $crp_settings );
-
-} else {
+if ( is_multisite() ) {
 
 	// Get all blogs in the network and activate plugin on each one.
-	$blogids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+	$blogids = $wpdb->get_col( //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 		"
-        SELECT blogid FROM $wpdb->blogs
-        WHERE archived = '0' AND spam = '0' AND deleted = '0'
+		SELECT blog_id FROM $wpdb->blogs
+		WHERE archived = '0' AND spam = '0' AND deleted = '0'
 	"
 	);
+
 	foreach ( $blogids as $blogid ) {
 		switch_to_blog( $blogid );
-
-		unset( $crp_settings['crpt_tag'] );
-		unset( $crp_settings['crpt_category'] );
-		update_option( $option_name, $crp_settings );
-
+		crpt_delete_data();
+		restore_current_blog();
 	}
-
-	// Switch back to the current blog.
-	restore_current_blog();
-
+} else {
+	crpt_delete_data();
 }
 
+
+/**
+ * Delete settings on uninstall.
+ */
+function crpt_delete_data() {
+
+	$new_settings = get_option( 'crp_settings' );
+	$old_settings = get_option( 'ald_crp_settings' );
+
+	$options = array(
+		'crpt_tag',
+		'crpt_category',
+		'crpt_taxes',
+		'crpt_match_all',
+		'crpt_disable_contextual',
+		'crpt_disable_contextual_cpt',
+		'crpt_same_taxes',
+	);
+
+	foreach ( $options as $option ) {
+		unset( $new_settings[ $option ] );
+		unset( $old_settings[ $option ] );
+	}
+
+	if ( ! empty( $old_settings ) ) {
+		update_option( 'ald_crp_settings', $old_settings );
+	}
+	if ( ! empty( $new_settings ) ) {
+		update_option( 'crp_settings', $new_settings );
+	}
+
+}

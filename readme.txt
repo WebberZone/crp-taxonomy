@@ -60,6 +60,7 @@ If your question isn't listed here, please create a new post detailing your prob
 
 * Bug fixes:
 	* Saving settings added admin notices incorrectly
+	* Delete settings on uninstall
 
 = 1.4.0 =
 

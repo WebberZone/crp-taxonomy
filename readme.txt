@@ -46,8 +46,8 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 
 == Screenshots ==
 
-1. CRP Taxonomy options in WP-Admin - General options
-
+1. New options in WP-Admin - General options
+2. New options in WP-Admin - List Tuning options
 
 == Frequently Asked Questions ==
 

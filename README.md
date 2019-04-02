@@ -33,7 +33,7 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 ## Screenshots
 
 ![General Options](https://raw.github.com/ajaydsouza/crp-taxonomy/master/wporg-assets/screenshot-1.png)
-_Related Posts by Categories and Tags Options_
+_Related Posts by Categories and Tags General Options_
 
 For more screenshots visit the [WordPress plugin page](https://wordpress.org/plugins/crp-taxonomy/screenshots/)
 

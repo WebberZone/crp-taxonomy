@@ -84,3 +84,40 @@ function crpt_activate_new_site( $blog_id ) {
 add_action( 'wpmu_new_blog', 'crpt_activate_new_site' );
 
 
+/**
+ * Upgrade pre v1.4.0 settings.
+ *
+ * @since 1.4.0
+ * @return boolean True if updated, false if nothing to do.
+ */
+function crpt_upgrade_settings() {
+	global $crp_settings;
+
+	if ( ! empty( $crp_settings['crpt_same_taxes'] ) || ! function_exists( 'crp_get_settings' ) ) {
+		return false;
+	}
+
+	$taxonomies = array();
+
+	if ( isset( $crp_settings['crpt_category'] ) && $crp_settings['crpt_category'] ) {
+		$taxonomies[] = 'category';
+	}
+
+	if ( isset( $crp_settings['crpt_tag'] ) && $crp_settings['crpt_tag'] ) {
+		$taxonomies[] = 'post_tag';
+	}
+
+	if ( isset( $crp_settings['crpt_taxes'] ) && $crp_settings['crpt_taxes'] ) {
+		$crpt_taxes = explode( ',', $crp_settings['crpt_taxes'] );
+		$taxonomies = array_merge( $taxonomies, $crpt_taxes );
+	}
+
+	crp_delete_option( 'crpt_category' );
+	crp_delete_option( 'crpt_tag' );
+	crp_delete_option( 'crpt_taxes' );
+
+	$did_update = crp_update_option( 'crpt_same_taxes', implode( ',', $taxonomies ) );
+
+	return $did_update;
+}
+add_action( 'admin_init', 'crpt_upgrade_settings' );

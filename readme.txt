@@ -3,8 +3,8 @@ Tags: related posts, related, similar posts, posts, custom post types, tags, cat
 Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 4.1
-Tested up to: 4.9
+Requires at least: 4.7
+Tested up to: 5.1
 License: GPLv2 or later
 
 Restrict the related posts to the same category, tag or custom taxonomy. Requires Contextual Related Posts.
@@ -55,6 +55,11 @@ If your question isn't listed here, please create a new post detailing your prob
 
 
 == Changelog ==
+
+= 1.4.1 =
+
+* Bug fixes:
+	* Saving settings added admin notices incorrectly
 
 = 1.4.0 =
 

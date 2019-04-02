@@ -93,7 +93,7 @@ add_action( 'wpmu_new_blog', 'crpt_activate_new_site' );
 function crpt_upgrade_settings() {
 	global $crp_settings;
 
-	if ( ! empty( $crp_settings['crpt_same_taxes'] ) || ! function_exists( 'crp_get_settings' ) ) {
+	if ( isset( $crp_settings['crpt_same_taxes'] ) || ! function_exists( 'crp_get_settings' ) ) {
 		return false;
 	}
 
@@ -112,12 +112,12 @@ function crpt_upgrade_settings() {
 		$taxonomies = array_merge( $taxonomies, $crpt_taxes );
 	}
 
-	crp_delete_option( 'crpt_category' );
-	crp_delete_option( 'crpt_tag' );
-	crp_delete_option( 'crpt_taxes' );
+	unset( $crp_settings['crpt_category'] );
+	unset( $crp_settings['crpt_tag'] );
+	unset( $crp_settings['crpt_taxes'] );
 
-	$did_update = crp_update_option( 'crpt_same_taxes', implode( ',', $taxonomies ) );
+	$crp_settings['crpt_same_taxes'] = implode( ',', $taxonomies );
 
-	return $did_update;
+	update_option( 'crp_settings', $crp_settings );
 }
-add_action( 'admin_init', 'crpt_upgrade_settings' );
+add_action( 'admin_init', 'crpt_upgrade_settings', 999 );

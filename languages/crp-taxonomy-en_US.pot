@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Related Posts by Categories and Tags\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-07 13:07+0100\n"
+"POT-Creation-Date: 2019-04-02 15:16+0100\n"
 "PO-Revision-Date: 2017-05-07 13:07+0100\n"
 "Last-Translator: Ajay D'Souza\n"
 "Language-Team: me@ajaydsouza.com\n"
@@ -15,71 +15,84 @@ msgstr ""
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/admin.php:86
+#: includes/admin/admin.php:33 includes/admin/deprecated.php:90
 msgid "Fetch related posts only from"
 msgstr ""
 
-#: admin/admin.php:88
-msgid "Same categories"
-msgstr ""
-
-#: admin/admin.php:89
-msgid "Same tags"
-msgstr ""
-
-#: admin/admin.php:97
-#, php-format
-msgid "Same %s"
-msgstr ""
-
-#: admin/admin.php:104
+#: includes/admin/admin.php:34 includes/admin/deprecated.php:113
 msgid ""
 "Limit the related posts only to the current categories, tags, and/or "
 "taxonomies."
 msgstr ""
 
-#: admin/admin.php:108
-msgid "Taxonomy matching:"
-msgstr ""
-
-#: admin/admin.php:110
+#: includes/admin/admin.php:40 includes/admin/deprecated.php:119
 msgid "Match all taxonomy terms"
 msgstr ""
 
-#: admin/admin.php:111
+#: includes/admin/admin.php:41
 msgid ""
 "If selected, will limit the related posts to ones that match all the above "
-"selected taxonomy terms of the current post instead of just one of them."
+"selected taxonomy terms of the current post instead of just one of them. "
+"This can result in no related posts being found."
 msgstr ""
 
-#: admin/admin.php:112
-msgid "Note: This can result in no related posts being found."
-msgstr ""
-
-#: admin/admin.php:131
+#: includes/admin/admin.php:65 includes/admin/deprecated.php:144
 msgid "Disable contextual matching"
 msgstr ""
 
-#: admin/admin.php:137
+#: includes/admin/admin.php:66 includes/admin/deprecated.php:150
 msgid ""
 "Selecting this option will turn off contextual matching. This is only useful "
 "if you activate the above option: \"Fetch related posts only from above\". "
 "Otherwise, you will end up with the same set of related posts on all pages."
 msgstr ""
 
-#: admin/admin.php:140
+#: includes/admin/admin.php:72 includes/admin/deprecated.php:153
 msgid "Disable contextual matching ONLY on attachments and custom post types"
 msgstr ""
 
-#: admin/admin.php:146
+#: includes/admin/admin.php:73 includes/admin/deprecated.php:159
 msgid ""
 "Applies only if the previous option is checked. Selecting this option will "
 "retain contextual matching for posts and pages but disable this on any "
 "custom post types."
+msgstr ""
+
+#: includes/admin/admin.php:94
+msgid ""
+"Related Posts by Categories and Tags requires Contextual Related Posts "
+"v2.6.0. Please install it or deactivate this plugin."
+msgstr ""
+
+#: includes/admin/deprecated.php:92
+msgid "Same categories"
+msgstr ""
+
+#: includes/admin/deprecated.php:93
+msgid "Same tags"
+msgstr ""
+
+#: includes/admin/deprecated.php:104
+#, php-format
+msgid "Same %s"
+msgstr ""
+
+#: includes/admin/deprecated.php:117
+msgid "Taxonomy matching:"
+msgstr ""
+
+#: includes/admin/deprecated.php:120
+msgid ""
+"If selected, will limit the related posts to ones that match all the above "
+"selected taxonomy terms of the current post instead of just one of them."
+msgstr ""
+
+#: includes/admin/deprecated.php:121
+msgid "Note: This can result in no related posts being found."
 msgstr ""

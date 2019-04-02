@@ -58,6 +58,8 @@ If your question isn't listed here, please create a new post detailing your prob
 
 = 1.4.0 =
 
+Release post: [https://wzn.io/2K0Ueyw](https://wzn.io/2K0Ueyw)
+
 Plugin has been renamed to "Related Posts by Categories and Tags"
 
 * Enhancements:

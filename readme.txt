@@ -7,15 +7,15 @@ Requires at least: 4.1
 Tested up to: 4.9
 License: GPLv2 or later
 
-Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy
+Restrict the related posts to the same category, tag or custom taxonomy. Requires Contextual Related Posts.
 
 == Description ==
 
-[CRP Taxonomy Tools](https://webberzone.com/downloads/crp-taxonomy/) is an extension for [Contextual Related Posts](https://webberzone.com/plugins/contextual-related-posts/) that adds another degree of related posts matching by adding the option to restrict these related posts to the same category, tag or custom taxonomy. This plugin adds additional checkboxes under General options under the Related Posts page.
+[CRP Taxonomy Tools](https://webberzone.com/downloads/crp-taxonomy/) is an extension for [Contextual Related Posts](https://webberzone.com/plugins/contextual-related-posts/) that adds another degree of related posts matching by adding the option to restrict these related posts to the same category, tag or custom taxonomy.
 
 Additionally, you can also disable the contextual matching engine either on posts/pages or on only custom post types.
 
-Requires Contextual Related Posts v2.0 or higher.
+Requires Contextual Related Posts v2.6.0 or higher.
 
 
 = Contribute =

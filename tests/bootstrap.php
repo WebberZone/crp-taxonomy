@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package Crp_Taxonomy
+ * @package CRP_Taxonomy
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
@@ -23,3 +23,8 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
+
+activate_plugin( 'crp-taxonomy/crp-taxonomy.php' );
+
+echo "Installing Related Posts by Categories and Tags...\n";
+

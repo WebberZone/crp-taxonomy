@@ -56,7 +56,19 @@ If your question isn't listed here, please create a new post detailing your prob
 
 == Changelog ==
 
+= 1.4.0 =
+
+Plugin has been renamed to "Related Posts by Categories and Tags"
+
+* Enhancements:
+	* Upgrade the plugin for the new Settings API in Contextual Related Posts v2.6.0
+	* Add a notice in the admin page if Contextual Related Posts v2.6.0 and above is not installed
+
+* Deprecated:
+	*  Old settings interface - crpt_crp_default_options, crpt_save_options, crt_general_options, crt_tuning_options
+
 = 1.3.0 =
+
 * Enhancements:
 	* When "Match all taxonomy terms" is selected, only taxonomies for the current post type is selected. This reduces the cases where no posts are found. Posts are also now properly ranked by relevancy
 
@@ -64,6 +76,7 @@ If your question isn't listed here, please create a new post detailing your prob
 	* Fixed PHP notices
 
 = 1.2.0 =
+
 * Features:
 	* Option to match by all taxonomies - Contributed by [Enchiridion](https://github.com/Enchiridion)
 
@@ -72,16 +85,18 @@ If your question isn't listed here, please create a new post detailing your prob
 	* Activation of the plugin failed with Contextual Related Posts v2.2.x
 
 = 1.1.0 =
+
 * Features:
 	* Added support for custom taxonomies. Very useful if your custom post types have custom taxonomies
 	* Disable contextual matching
 
 = 1.0.0 =
+
 * Initial release
 
 
 == Upgrade Notice ==
 
-= 1.3.0 =
-* Bug fixes; Optimisation when selecting "Match all taxonomy terms";
+= 1.4.0 =
+Supports Contextual Related Posts v2.6.0 and above; Plugin renamed to Related Posts by Categories and Tags;
 Check Changelog for detailed updates

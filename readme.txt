@@ -58,6 +58,8 @@ If your question isn't listed here, please create a new post detailing your prob
 
 = 1.4.1 =
 
+Release post: [https://wzn.io/2K2ohWB](https://wzn.io/2K2ohWB)
+
 * Bug fixes:
 	* Saving settings added admin notices incorrectly
 	* Delete settings on uninstall

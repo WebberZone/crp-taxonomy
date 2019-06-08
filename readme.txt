@@ -4,7 +4,7 @@ Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 4.7
-Tested up to: 5.1
+Tested up to: 5.2
 License: GPLv2 or later
 
 Restrict the related posts to the same category, tag or custom taxonomy. Requires Contextual Related Posts.

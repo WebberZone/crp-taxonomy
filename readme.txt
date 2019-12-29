@@ -3,8 +3,8 @@ Tags: related posts, related, similar posts, posts, custom post types, tags, cat
 Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 4.7
-Tested up to: 5.2
+Requires at least: 4.8
+Tested up to: 5.3
 License: GPLv2 or later
 
 Restrict the related posts to the same category, tag or custom taxonomy. Requires Contextual Related Posts.
@@ -56,9 +56,14 @@ If your question isn't listed here, please create a new post detailing your prob
 
 == Changelog ==
 
+= 1.4.2 =
+
+* Bug fixes:
+	* Resetting Contextual Relatd Posts settings with this plugin activated caused an error
+
 = 1.4.1 =
 
-Release post: [https://wzn.io/2K2ohWB](https://wzn.io/2K2ohWB)
+Release post: [https://webberzone.com/blog/contextual-related-posts-v2-6-1/](https://webberzone.com/blog/contextual-related-posts-v2-6-1/)
 
 * Bug fixes:
 	* Saving settings added admin notices incorrectly
@@ -66,7 +71,7 @@ Release post: [https://wzn.io/2K2ohWB](https://wzn.io/2K2ohWB)
 
 = 1.4.0 =
 
-Release post: [https://wzn.io/2K0Ueyw](https://wzn.io/2K0Ueyw)
+Release post: [https://webberzone.com/blog/related-posts-by-categories-and-tags-v1-4-0/](https://webberzone.com/blog/related-posts-by-categories-and-tags-v1-4-0/)
 
 Plugin has been renamed to "Related Posts by Categories and Tags"
 
@@ -107,6 +112,5 @@ Plugin has been renamed to "Related Posts by Categories and Tags"
 
 == Upgrade Notice ==
 
-= 1.4.0 =
-Supports Contextual Related Posts v2.6.0 and above; Plugin renamed to Related Posts by Categories and Tags;
-Check Changelog for detailed updates
+= 1.4.2 =
+Bug fix release. Check Changelog for detailed updates

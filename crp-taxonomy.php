@@ -10,13 +10,13 @@
  * @author      Ajay D'Souza
  * @license     GPL-2.0+
  * @link        https://webberzone.com
- * @copyright   2014-2019 Ajay D'Souza
+ * @copyright   2014-2020 Ajay D'Souza
  *
  * @wordpress-plugin
  * Plugin Name: Related Posts by Categories and Tags
  * Plugin URI: https://webberzone.com/downloads/crp-taxonomy/
  * Description: Restrict the related posts to the same category, tag or custom taxonomy. Requires Contextual Related Posts v2.6.0 or higher.
- * Version: 1.4.1
+ * Version: 1.4.2-beta1
  * Author: Ajay D'Souza
  * Author URI: https://webberzone.com
  * Text Domain: crp-taxonomy

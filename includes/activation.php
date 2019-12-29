@@ -97,24 +97,25 @@ function crpt_upgrade_settings() {
 		return false;
 	}
 
+	$crp_settings = crp_get_settings();
+
 	$taxonomies = array();
 
 	if ( isset( $crp_settings['crpt_category'] ) && $crp_settings['crpt_category'] ) {
 		$taxonomies[] = 'category';
+		unset( $crp_settings['crpt_category'] );
 	}
 
 	if ( isset( $crp_settings['crpt_tag'] ) && $crp_settings['crpt_tag'] ) {
 		$taxonomies[] = 'post_tag';
+		unset( $crp_settings['crpt_tag'] );
 	}
 
 	if ( isset( $crp_settings['crpt_taxes'] ) && $crp_settings['crpt_taxes'] ) {
 		$crpt_taxes = explode( ',', $crp_settings['crpt_taxes'] );
 		$taxonomies = array_merge( $taxonomies, $crpt_taxes );
+		unset( $crp_settings['crpt_taxes'] );
 	}
-
-	unset( $crp_settings['crpt_category'] );
-	unset( $crp_settings['crpt_tag'] );
-	unset( $crp_settings['crpt_taxes'] );
 
 	$crp_settings['crpt_same_taxes'] = implode( ',', $taxonomies );
 

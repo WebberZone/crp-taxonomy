@@ -56,7 +56,10 @@ If your question isn't listed here, please create a new post detailing your prob
 
 == Changelog ==
 
-= 1.4.2 =
+= 1.5.0 =
+
+* Features:
+	* New option to enter the minimum number of common taxonomies to be matched before a post is considered related
 
 * Bug fixes:
 	* Resetting Contextual Relatd Posts settings with this plugin activated caused an error
@@ -112,5 +115,5 @@ Plugin has been renamed to "Related Posts by Categories and Tags"
 
 == Upgrade Notice ==
 
-= 1.4.2 =
+= 1.5.0 =
 Bug fix release. Check Changelog for detailed updates

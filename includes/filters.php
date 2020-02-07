@@ -197,8 +197,10 @@ add_filter( 'crp_posts_orderby', 'crpt_crp_posts_orderby', 10, 1 );
 function crpt_crp_posts_having( $having ) {
 	global $wpdb, $crp_settings;
 
+	$crpt_no_of_taxes = isset( $crp_settings['crpt_no_of_taxes'] ) ? $crp_settings['crpt_no_of_taxes'] : 1;
+
 	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
-		$having .= $wpdb->prepare( ' COUNT(DISTINCT crpt_tt.taxonomy) = %d', $crp_settings['crpt_taxonomy_count'] );
+		$having .= $wpdb->prepare( ' ( COUNT(DISTINCT crpt_tt.taxonomy) = %d AND COUNT(DISTINCT crpt_tt.term_id) >= %d ) ', $crp_settings['crpt_taxonomy_count'], $crpt_no_of_taxes );
 	}
 
 	return $having;

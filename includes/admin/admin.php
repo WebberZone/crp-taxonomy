@@ -28,19 +28,27 @@ if ( ! defined( 'WPINC' ) ) {
 function crpt_settings_general( $settings ) {
 
 	$new_settings = array(
-		'crpt_same_taxes' => array(
+		'crpt_same_taxes'  => array(
 			'id'      => 'crpt_same_taxes',
 			'name'    => esc_html__( 'Fetch related posts only from', 'crp-taxonomy' ),
 			'desc'    => esc_html__( 'Limit the related posts only to the current categories, tags, and/or taxonomies.', 'crp-taxonomy' ),
 			'type'    => 'taxonomies',
 			'options' => '',
 		),
-		'crpt_match_all'  => array(
+		'crpt_match_all'   => array(
 			'id'      => 'crpt_match_all',
 			'name'    => esc_html__( 'Match all taxonomy terms', 'crp-taxonomy' ),
 			'desc'    => esc_html__( 'If selected, will limit the related posts to ones that match all the above selected taxonomy terms of the current post instead of just one of them. This can result in no related posts being found.', 'crp-taxonomy' ),
 			'type'    => 'checkbox',
 			'options' => false,
+		),
+		'crpt_no_of_taxes' => array(
+			'id'      => 'crpt_no_of_taxes',
+			'name'    => esc_html__( 'Number of common taxonomies', 'crp-taxonomy' ),
+			'desc'    => esc_html__( 'Enter the minimum number of common taxonomies that have to be matched before a post is considered related.', 'crp-taxonomy' ),
+			'type'    => 'number',
+			'options' => '1',
+			'min'     => '1',
 		),
 	);
 
@@ -63,7 +71,7 @@ function crpt_settings_list( $settings ) {
 		'crpt_disable_contextual'     => array(
 			'id'      => 'crpt_disable_contextual',
 			'name'    => esc_html__( 'Disable contextual matching', 'crp-taxonomy' ),
-			'desc'    => esc_html__( 'Selecting this option will turn off contextual matching. This is only useful if you activate the above option: "Fetch related posts only from above". Otherwise, you will end up with the same set of related posts on all pages.', 'crp-taxonomy' ),
+			'desc'    => esc_html__( 'Selecting this option will turn off contextual matching. This is only useful if you activate the option: "Fetch related posts only from above" from the General tab. Otherwise, you will end up with the same set of related posts on all pages with no relevance.', 'crp-taxonomy' ),
 			'type'    => 'checkbox',
 			'options' => false,
 		),

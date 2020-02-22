@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Related Posts by Categories and Tags\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-02 15:16+0100\n"
+"POT-Creation-Date: 2020-02-22 21:59+0000\n"
 "PO-Revision-Date: 2017-05-07 13:07+0100\n"
 "Last-Translator: Ajay D'Souza\n"
 "Language-Team: me@ajaydsouza.com\n"
@@ -15,7 +15,7 @@ msgstr ""
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Textdomain-Support: yes\n"
@@ -42,29 +42,55 @@ msgid ""
 "This can result in no related posts being found."
 msgstr ""
 
-#: includes/admin/admin.php:65 includes/admin/deprecated.php:144
+#: includes/admin/admin.php:47
+msgid "Number of common taxonomies"
+msgstr ""
+
+#: includes/admin/admin.php:48
+msgid ""
+"Enter the minimum number of common taxonomies that have to be matched before "
+"a post is considered related."
+msgstr ""
+
+#: includes/admin/admin.php:73 includes/admin/deprecated.php:144
 msgid "Disable contextual matching"
 msgstr ""
 
-#: includes/admin/admin.php:66 includes/admin/deprecated.php:150
+#: includes/admin/admin.php:74
 msgid ""
 "Selecting this option will turn off contextual matching. This is only useful "
-"if you activate the above option: \"Fetch related posts only from above\". "
-"Otherwise, you will end up with the same set of related posts on all pages."
+"if you activate the option: \"Fetch related posts only from above\" from the "
+"General tab. Otherwise, you will end up with the same set of related posts "
+"on all pages with no relevance."
 msgstr ""
 
-#: includes/admin/admin.php:72 includes/admin/deprecated.php:153
+#: includes/admin/admin.php:80 includes/admin/deprecated.php:153
 msgid "Disable contextual matching ONLY on attachments and custom post types"
 msgstr ""
 
-#: includes/admin/admin.php:73 includes/admin/deprecated.php:159
+#: includes/admin/admin.php:81 includes/admin/deprecated.php:159
 msgid ""
 "Applies only if the previous option is checked. Selecting this option will "
 "retain contextual matching for posts and pages but disable this on any "
 "custom post types."
 msgstr ""
 
-#: includes/admin/admin.php:94
+#: includes/admin/admin.php:105
+msgid "CRP Taxonomy settings"
+msgstr ""
+
+#: includes/admin/admin.php:111
+msgid "Exclude on Categories"
+msgstr ""
+
+#: includes/admin/admin.php:112
+msgid ""
+"Comma separated list of category slugs. The field above has an autocomplete "
+"so simply start typing in the starting letters and it will prompt you with "
+"options. Does not support custom taxonomies."
+msgstr ""
+
+#: includes/admin/admin.php:138
 msgid ""
 "Related Posts by Categories and Tags requires Contextual Related Posts "
 "v2.6.0. Please install it or deactivate this plugin."
@@ -95,4 +121,11 @@ msgstr ""
 
 #: includes/admin/deprecated.php:121
 msgid "Note: This can result in no related posts being found."
+msgstr ""
+
+#: includes/admin/deprecated.php:150
+msgid ""
+"Selecting this option will turn off contextual matching. This is only useful "
+"if you activate the above option: \"Fetch related posts only from above\". "
+"Otherwise, you will end up with the same set of related posts on all pages."
 msgstr ""

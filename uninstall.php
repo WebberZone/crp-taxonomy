@@ -47,10 +47,12 @@ function crpt_delete_data() {
 		'crpt_tag',
 		'crpt_category',
 		'crpt_taxes',
+		'crpt_same_taxes',
 		'crpt_match_all',
+		'crpt_no_of_taxes',
 		'crpt_disable_contextual',
 		'crpt_disable_contextual_cpt',
-		'crpt_same_taxes',
+		'exclude_on_cat_slugs',
 	);
 
 	foreach ( $options as $option ) {

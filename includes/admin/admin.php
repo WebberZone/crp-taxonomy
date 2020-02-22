@@ -90,6 +90,42 @@ add_filter( 'crp_settings_list', 'crpt_settings_list' );
 
 
 /**
+ * Add options to the Output settings array of CRP.
+ *
+ * @since 1.5.0
+ *
+ * @param array $settings Contextual Related Posts List tuning settings array.
+ * @return array Output settings array
+ */
+function crpt_settings_output( $settings ) {
+
+	$new_settings = array(
+		'crpt_output_header'   => array(
+			'id'   => 'crpt_output_header',
+			'name' => '<h3>' . esc_html__( 'CRP Taxonomy settings', 'crp-taxonomy' ) . '</h3>',
+			'desc' => '',
+			'type' => 'header',
+		),
+		'exclude_on_cat_slugs' => array(
+			'id'               => 'exclude_on_cat_slugs',
+			'name'             => esc_html__( 'Exclude on Categories', 'crp-taxonomy' ),
+			'desc'             => esc_html__( 'Comma separated list of category slugs. The field above has an autocomplete so simply start typing in the starting letters and it will prompt you with options. Does not support custom taxonomies.', 'crp-taxonomy' ),
+			'type'             => 'csv',
+			'options'          => '',
+			'size'             => 'large',
+			'field_class'      => 'category_autocomplete',
+			'field_attributes' => array(
+				'data-wp-taxonomy' => 'category',
+			),
+		),
+	);
+
+	return array_merge( $settings, $new_settings );
+}
+add_filter( 'crp_settings_output', 'crpt_settings_output' );
+
+
+/**
  * Display notices in the admin screen if Contextual Related Posts v2.6.0 is not installed.
  *
  * @since 1.4.0
@@ -105,3 +141,36 @@ function crpt_admin_notices() {
 	}
 }
 add_filter( 'admin_notices', 'crpt_admin_notices' );
+
+
+/**
+ * Modify settings when they are being saved.
+ *
+ * @since 1.5.0
+ *
+ * @param  array $settings Settings array.
+ * @return string  $settings  Sanitized settings array.
+ */
+function crpt_change_settings_on_save( $settings ) {
+
+	// Sanitize exclude_on_cat_slugs to save a new entry of exclude_on_categories.
+	if ( isset( $settings['exclude_on_cat_slugs'] ) ) {
+
+		$exclude_on_cat_slugs = array_unique( explode( ',', $settings['exclude_on_cat_slugs'] ) );
+
+		foreach ( $exclude_on_cat_slugs as $cat_name ) {
+			$cat = get_term_by( 'name', $cat_name, 'category' );
+
+			if ( isset( $cat->term_taxonomy_id ) ) {
+				$exclude_on_categories[]       = $cat->term_taxonomy_id;
+				$exclude_on_categories_slugs[] = $cat->name;
+			}
+		}
+		$settings['exclude_on_categories'] = isset( $exclude_on_categories ) ? join( ',', $exclude_on_categories ) : '';
+		$settings['exclude_on_cat_slugs']  = isset( $exclude_on_categories_slugs ) ? join( ',', $exclude_on_categories_slugs ) : '';
+
+	}
+
+	return $settings;
+}
+add_filter( 'crp_settings_sanitize', 'crpt_change_settings_on_save' );

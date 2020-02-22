@@ -60,6 +60,7 @@ If your question isn't listed here, please create a new post detailing your prob
 
 * Features:
 	* New option to enter the minimum number of common taxonomies to be matched before a post is considered related
+	* New option to exclude display on select post categories. Does not work with tags or custom taxonomies
 
 * Bug fixes:
 	* Resetting Contextual Relatd Posts settings with this plugin activated caused an error

@@ -20,7 +20,7 @@ Requires Contextual Related Posts v2.6.0 or higher.
 
 = Contribute =
 
-Related Posts by Categories and Tags is open for contribution on [Github](https://github.com/ajaydsouza/crp-taxonomy)
+**Related Posts by Categories and Tags** is open for contribution on [Github](https://github.com/ajaydsouza/crp-taxonomy)
 
 So, if you've got some cool feature that you'd like to implement into the plugin or a bug you've been able to fix, consider forking the project and sending me a pull request.
 
@@ -48,6 +48,8 @@ So, if you've got some cool feature that you'd like to implement into the plugin
 
 1. New options in WP-Admin - General options
 2. New options in WP-Admin - List Tuning options
+3. New options in WP-Admin - Output options
+
 
 == Frequently Asked Questions ==
 
@@ -57,6 +59,8 @@ If your question isn't listed here, please create a new post detailing your prob
 == Changelog ==
 
 = 1.5.0 =
+
+Release post: [https://webberzone.com/blog/crp-taxonomy-v1-5-0/](https://webberzone.com/blog/crp-taxonomy-v1-5-0/)
 
 * Features:
 	* New option to enter the minimum number of common taxonomies to be matched before a post is considered related
@@ -117,4 +121,4 @@ Plugin has been renamed to "Related Posts by Categories and Tags"
 == Upgrade Notice ==
 
 = 1.5.0 =
-Bug fix release. Check Changelog for detailed updates
+Bug fix, new options. Check Changelog for detailed updates

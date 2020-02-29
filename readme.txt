@@ -1,5 +1,5 @@
 === Related Posts by Categories and Tags ===
-Tags: related posts, related, similar posts, posts, custom post types, tags, categories
+Tags: related posts, contextual related posts, related, similar posts, posts, custom post types, tags, categories
 Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
@@ -60,14 +60,14 @@ If your question isn't listed here, please create a new post detailing your prob
 
 = 1.5.0 =
 
-Release post: [https://webberzone.com/blog/crp-taxonomy-v1-5-0/](https://webberzone.com/blog/crp-taxonomy-v1-5-0/)
+Release post: [https://webberzone.com/blog/related-posts-by-categories-and-tags-v1-5-0/](https://webberzone.com/blog/related-posts-by-categories-and-tags-v1-5-0/)
 
 * Features:
 	* New option to enter the minimum number of common taxonomies to be matched before a post is considered related
 	* New option to exclude display on select post categories. Does not work with tags or custom taxonomies
 
 * Bug fixes:
-	* Resetting Contextual Relatd Posts settings with this plugin activated caused an error
+	* Resetting Contextual Related Posts settings with this plugin activated caused an error
 
 = 1.4.1 =
 

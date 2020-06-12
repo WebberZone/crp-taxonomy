@@ -261,3 +261,36 @@ function crpt_crp_posts_match( $match, $stuff, $postid ) {
 }
 add_filter( 'crp_posts_match', 'crpt_crp_posts_match', 10, 3 );
 
+
+/**
+ * Disable the output on selected categories.
+ *
+ * @since 1.6.0
+ *
+ * @param  bool $short_circuit Short circuit flag.
+ * @return Updated short circuit flag.
+ */
+function crpt_short_circuit( $short_circuit ) {
+	global $crp_settings;
+
+	$current_post_cats = array();
+
+	// Return false if current category is in exclude_on_categories.
+	if ( ! empty( $crp_settings['exclude_on_categories'] ) ) {
+
+		$current_post_category = get_the_category();
+
+		foreach ( $current_post_category as $cat ) {
+			$current_post_cats[] = $cat->cat_ID;
+		}
+
+		$exclude_categories = explode( ',', $crp_settings['exclude_on_categories'] );
+
+		if ( ! empty( array_intersect( $current_post_cats, $exclude_categories ) ) ) {
+			return true;
+		}
+	}
+
+	return $short_circuit;
+}
+add_filter( 'get_crp_short_circuit', 'crpt_short_circuit' );

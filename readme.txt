@@ -60,6 +60,9 @@ If your question isn't listed here, please create a new post detailing your prob
 
 = 1.6.0 =
 
+* Enhancements:
+	* Exclude on categories uses the short ciruit filter introduced in Contextual Related Posts v2.9.0
+
 * Bug fixes:
 	* Use `crp_get_settings` instead of `crp_read_options`
 

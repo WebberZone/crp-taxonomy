@@ -6,9 +6,9 @@
 [![Build Status](https://travis-ci.org/WebberZone/crp-taxonomy.svg?branch=master)](https://travis-ci.org/WebberZone/crp-taxonomy)
 [![Code Climate](https://codeclimate.com/github/WebberZone/crp-taxonomy/badges/gpa.svg)](https://codeclimate.com/github/WebberZone/crp-taxonomy)
 
-__Requires:__ WordPress v4.8, Contextual Related Posts v2.6.0
+__Requires:__ WordPress v4.9, Contextual Related Posts v2.6.0
 
-__Tested up to:__ WordPress v5.3
+__Tested up to:__ WordPress v5.4
 
 __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 

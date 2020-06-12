@@ -56,8 +56,8 @@ function crpt_single_activate() {
 
 	// Only run this if Contextual Related Posts v2.6.0 and higher is not installed.
 	if ( ! function_exists( 'crp_get_settings' ) ) {
-		// Loop through crp_read_options to ensure that our options are added across the network.
-		crp_read_options();
+		// Loop through crp_get_settings to ensure that our options are added across the network.
+		crp_get_settings();
 	}
 
 }

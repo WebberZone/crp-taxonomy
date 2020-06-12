@@ -2,9 +2,9 @@
 Tags: related posts, contextual related posts, related, similar posts, posts, custom post types, tags, categories
 Contributors: webberzone, Ajay
 Donate link: http://ajaydsouza.com/donate/
-Stable tag: trunk
-Requires at least: 4.8
-Tested up to: 5.3
+Stable tag: 1.6.0
+Requires at least: 4.9
+Tested up to: 5.4
 License: GPLv2 or later
 
 Restrict the related posts to the same category, tag or custom taxonomy. Requires Contextual Related Posts.
@@ -57,6 +57,11 @@ If your question isn't listed here, please create a new post detailing your prob
 
 
 == Changelog ==
+
+= 1.6.0 =
+
+* Bug fixes:
+	* Use `crp_get_settings` instead of `crp_read_options`
 
 = 1.5.0 =
 

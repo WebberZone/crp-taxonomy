@@ -15,14 +15,16 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since 1.0.0
  *
- * @param   string $join JOIN clause.
- * @return  string  Filtered JOIN clause
+ * @param string $join    JOIN clause.
+ * @param int    $post_id Post ID.
+ * @param array  $args    Arguments array.
+ * @return string  Filtered JOIN clause
  */
-function crpt_crp_posts_join( $join ) {
-	global $wpdb, $crp_settings;
+function crpt_crp_posts_join( $join, $post_id, $args ) {
+	global $wpdb;
 
 	// Return if we have no tag / category or taxonomy to be matched.
-	if ( empty( $crp_settings['crpt_same_taxes'] ) && empty( $crp_settings['crpt_tag'] ) && empty( $crp_settings['crpt_category'] ) && empty( $crp_settings['crpt_taxes'] ) ) {
+	if ( empty( $args['crpt_same_taxes'] ) && empty( $args['crpt_tag'] ) && empty( $args['crpt_category'] ) && empty( $args['crpt_taxes'] ) ) {
 		return $join;
 	}
 
@@ -30,13 +32,13 @@ function crpt_crp_posts_join( $join ) {
 	$sql .= " INNER JOIN $wpdb->term_relationships AS crpt_tr ON ($wpdb->posts.ID = crpt_tr.object_id) ";
 	$sql .= " INNER JOIN $wpdb->term_taxonomy AS crpt_tt ON (crpt_tr.term_taxonomy_id = crpt_tt.term_taxonomy_id) ";
 
-	if ( $crp_settings['crpt_match_all'] ) {
+	if ( $args['crpt_match_all'] ) {
 		$sql .= " INNER JOIN $wpdb->terms AS crpt_t ON (crpt_tt.term_id = crpt_t.term_id) ";
 	}
 
 	return $sql;
 }
-add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
+add_filter( 'crp_posts_join', 'crpt_crp_posts_join', 10, 3 );
 
 
 /**
@@ -44,18 +46,20 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join' );
  *
  * @since 1.0.0
  *
- * @param   string $where WHERE clause.
+ * @param string $where   WHERE clause.
+ * @param int    $post_id Post ID.
+ * @param array  $args    Arguments array.
  * @return  string  Filtered WHERE clause
  */
-function crpt_crp_posts_where( $where ) {
-	global $wpdb, $post, $crp_settings;
+function crpt_crp_posts_where( $where, $post_id, $args ) {
+	global $wpdb, $post;
 
 	$term_ids          = array();
 	$taxonomies        = array();
 	$current_post_cats = array();
 
 	// Return false if current category is in exclude_on_categories.
-	if ( ! empty( $crp_settings['exclude_on_categories'] ) ) {
+	if ( ! empty( $args['exclude_on_categories'] ) ) {
 
 		$current_post_category = get_the_category();
 
@@ -63,7 +67,7 @@ function crpt_crp_posts_where( $where ) {
 			$current_post_cats[] = $cat->cat_ID;
 		}
 
-		$exclude_categories = explode( ',', $crp_settings['exclude_on_categories'] );
+		$exclude_categories = explode( ',', $args['exclude_on_categories'] );
 
 		if ( ! empty( array_intersect( $current_post_cats, $exclude_categories ) ) ) {
 			return ' AND false ';
@@ -71,25 +75,25 @@ function crpt_crp_posts_where( $where ) {
 	}
 
 	// Return if we have no tag / category or taxonomy to be matched.
-	if ( empty( $crp_settings['crpt_same_taxes'] ) && empty( $crp_settings['crpt_tag'] ) && empty( $crp_settings['crpt_category'] ) && empty( $crp_settings['crpt_taxes'] ) ) {
+	if ( empty( $args['crpt_same_taxes'] ) && empty( $args['crpt_tag'] ) && empty( $args['crpt_category'] ) && empty( $args['crpt_taxes'] ) ) {
 		return $where;
 	}
 
-	if ( isset( $crp_settings['crpt_category'] ) && $crp_settings['crpt_category'] ) {
+	if ( isset( $args['crpt_category'] ) && $args['crpt_category'] ) {
 		$taxonomies[] = 'category';
 	}
 
-	if ( isset( $crp_settings['crpt_tag'] ) && $crp_settings['crpt_tag'] ) {
+	if ( isset( $args['crpt_tag'] ) && $args['crpt_tag'] ) {
 		$taxonomies[] = 'post_tag';
 	}
 
-	if ( isset( $crp_settings['crpt_taxes'] ) && $crp_settings['crpt_taxes'] ) {
-		$crpt_taxes = explode( ',', $crp_settings['crpt_taxes'] );
+	if ( isset( $args['crpt_taxes'] ) && $args['crpt_taxes'] ) {
+		$crpt_taxes = explode( ',', $args['crpt_taxes'] );
 		$taxonomies = array_merge( $taxonomies, $crpt_taxes );
 	}
 
-	if ( isset( $crp_settings['crpt_same_taxes'] ) && $crp_settings['crpt_same_taxes'] ) {
-		$crpt_same_taxes = explode( ',', $crp_settings['crpt_same_taxes'] );
+	if ( isset( $args['crpt_same_taxes'] ) && $args['crpt_same_taxes'] ) {
+		$crpt_same_taxes = explode( ',', $args['crpt_same_taxes'] );
 		$taxonomies      = array_merge( $taxonomies, $crpt_same_taxes );
 	}
 
@@ -97,18 +101,18 @@ function crpt_crp_posts_where( $where ) {
 	$current_taxonomies = get_object_taxonomies( $post );
 
 	// Temp variable used in crpt_crp_posts_having(). We only want to limit this for taxonomies linked to the current post type.
-	$crp_settings['crpt_taxonomy_count'] = count( array_intersect( $current_taxonomies, $taxonomies ) );
+	$args['crpt_taxonomy_count'] = count( array_intersect( $current_taxonomies, $taxonomies ) );
 
 	// Get the terms for the current post.
 	$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
 	if ( is_wp_error( $terms ) || empty( $terms ) ) {
-		$crp_settings['crpt_taxonomy_count'] = 0;
+		$args['crpt_taxonomy_count'] = 0;
 		return $where;
 	} else {
 		$sql = '';
 
-		if ( $crp_settings['crpt_match_all'] ) {
+		if ( $args['crpt_match_all'] ) {
 			// Limit to posts matching all current taxonomy terms.
 			$term_strings   = array();
 			$selected_taxes = $taxonomies;
@@ -135,7 +139,7 @@ function crpt_crp_posts_where( $where ) {
 				$sql .= implode( ',', $term_strings );
 				$sql .= ')';
 			} else {
-				$crp_settings['crpt_taxonomy_count'] = 0;
+				$args['crpt_taxonomy_count'] = 0;
 			}
 		} else {
 			// Limit to posts matching any current taxonomy term.
@@ -150,7 +154,7 @@ function crpt_crp_posts_where( $where ) {
 		return $where . ' ' . $sql;
 	}
 }
-add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
+add_filter( 'crp_posts_where', 'crpt_crp_posts_where', 10, 3 );
 
 
 /**
@@ -158,24 +162,26 @@ add_filter( 'crp_posts_where', 'crpt_crp_posts_where' );
  *
  * @since   1.1.1
  *
- * @param  string $groupby GROUP BY clause.
+ * @param string $groupby GROUP BY clause.
+ * @param int    $post_id Post ID.
+ * @param array  $args    Arguments array.
  * @return string Filtered GROUP BY clause
  */
-function crpt_crp_posts_groupby( $groupby ) {
-	global $wpdb, $crp_settings;
+function crpt_crp_posts_groupby( $groupby, $post_id, $args ) {
+	global $wpdb;
 
-	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && (
-		! empty( $crp_settings['crpt_same_taxes'] ) ||
-		! empty( $crp_settings['crpt_tag'] ) ||
-		! empty( $crp_settings['crpt_category'] ) ||
-		! empty( $crp_settings['crpt_taxes'] )
+	if ( isset( $args['crpt_match_all'] ) && $args['crpt_match_all'] && (
+		! empty( $args['crpt_same_taxes'] ) ||
+		! empty( $args['crpt_tag'] ) ||
+		! empty( $args['crpt_category'] ) ||
+		! empty( $args['crpt_taxes'] )
 		) ) {
 		$groupby .= " $wpdb->posts.ID";
 	}
 
 	return $groupby;
 }
-add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
+add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby', 10, 3 );
 
 
 /**
@@ -183,24 +189,25 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby' );
  *
  * @since   1.3.0
  *
- * @param  string $orderby ORDER BY clause.
+ * @param string $orderby  ORDER BY clause.
+ * @param int    $post_id  Post ID.
+ * @param array  $args     Arguments array.
  * @return string Filtered ORDER BY clause
  */
-function crpt_crp_posts_orderby( $orderby ) {
-	global $crp_settings;
+function crpt_crp_posts_orderby( $orderby, $post_id, $args ) {
 
-	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
+	if ( isset( $args['crpt_match_all'] ) && $args['crpt_match_all'] && isset( $args['crpt_taxonomy_count'] ) && $args['crpt_taxonomy_count'] ) {
 
 		// Add a comma if $orderby is not empty.
 		if ( ! empty( $orderby ) ) {
 			$orderby .= ',';
 		}
-		$orderby .= $crp_settings['crp_posts_match'] . ' DESC ';
+		$orderby .= $args['crp_posts_match'] . ' DESC ';
 	}
 
 	return $orderby;
 }
-add_filter( 'crp_posts_orderby', 'crpt_crp_posts_orderby', 10, 1 );
+add_filter( 'crp_posts_orderby', 'crpt_crp_posts_orderby', 10, 3 );
 
 
 /**
@@ -208,21 +215,23 @@ add_filter( 'crp_posts_orderby', 'crpt_crp_posts_orderby', 10, 1 );
  *
  * @since   1.2.0
  *
- * @param  string $having HAVING clause.
+ * @param string $having  HAVING clause.
+ * @param int    $post_id Post ID.
+ * @param array  $args    Arguments array.
  * @return string Filtered HAVING clause
  */
-function crpt_crp_posts_having( $having ) {
-	global $wpdb, $crp_settings;
+function crpt_crp_posts_having( $having, $post_id, $args ) {
+	global $wpdb;
 
-	$crpt_no_of_taxes = isset( $crp_settings['crpt_no_of_taxes'] ) ? $crp_settings['crpt_no_of_taxes'] : 1;
+	$crpt_no_of_taxes = isset( $args['crpt_no_of_taxes'] ) ? $args['crpt_no_of_taxes'] : 1;
 
-	if ( isset( $crp_settings['crpt_match_all'] ) && $crp_settings['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
-		$having .= $wpdb->prepare( ' ( COUNT(DISTINCT crpt_tt.taxonomy) = %d AND COUNT(DISTINCT crpt_tt.term_id) >= %d ) ', $crp_settings['crpt_taxonomy_count'], $crpt_no_of_taxes );
+	if ( isset( $args['crpt_match_all'] ) && $args['crpt_match_all'] && isset( $args['crpt_taxonomy_count'] ) && $args['crpt_taxonomy_count'] ) {
+		$having .= $wpdb->prepare( ' ( COUNT(DISTINCT crpt_tt.taxonomy) = %d AND COUNT(DISTINCT crpt_tt.term_id) >= %d ) ', $args['crpt_taxonomy_count'], $crpt_no_of_taxes );
 	}
 
 	return $having;
 }
-add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1 );
+add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 3 );
 
 
 /**
@@ -232,24 +241,23 @@ add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 1 );
  *
  * @param array      $match MATCH clause.
  * @param string     $stuff Content being matched.
- * @param int|string $postid Post ID.
+ * @param int|string $post_id Post ID.
  * @return array Filtered array of CRP Settings
  */
-function crpt_crp_posts_match( $match, $stuff, $postid ) {
-	global $crp_settings;
+function crpt_crp_posts_match( $match, $stuff, $post_id ) {
 
 	// If matching all taxonomies, we store $match temporarily so it can be globally accessed.
 	if ( false !== strpos( $match, 'AND' ) ) {
 		$match_no_and = substr_replace( $match, '', strpos( $match, 'AND' ), 3 );
 	}
-	$crp_settings['crp_posts_match'] = $match_no_and;
+	$args['crp_posts_match'] = $match_no_and;
 
-	$post_type = get_post_type( $postid );
+	$post_type = get_post_type( $post_id );
 
-	if ( isset( $crp_settings['crpt_disable_contextual'] ) && $crp_settings['crpt_disable_contextual'] ) {
+	if ( isset( $args['crpt_disable_contextual'] ) && $args['crpt_disable_contextual'] ) {
 
 		/* If post or page and we're not disabling custom post types */
-		if ( ( 'post' === $post_type || 'page' === $post_type ) && ( $crp_settings['crpt_disable_contextual_cpt'] ) ) {
+		if ( ( 'post' === $post_type || 'page' === $post_type ) && ( $args['crpt_disable_contextual_cpt'] ) ) {
 			return $match;
 		}
 
@@ -267,16 +275,17 @@ add_filter( 'crp_posts_match', 'crpt_crp_posts_match', 10, 3 );
  *
  * @since 1.6.0
  *
- * @param  bool $short_circuit Short circuit flag.
- * @return Updated short circuit flag.
+ * @param bool   $short_circuit Short circuit filter.
+ * @param object $post          Current Post object.
+ * @param array  $args          Arguments array.
+ * @return bool Updated short circuit flag.
  */
-function crpt_short_circuit( $short_circuit ) {
-	global $crp_settings;
+function crpt_short_circuit( $short_circuit, $post, $args ) {
 
 	$current_post_cats = array();
 
 	// Return false if current category is in exclude_on_categories.
-	if ( ! empty( $crp_settings['exclude_on_categories'] ) ) {
+	if ( ! empty( $args['exclude_on_categories'] ) ) {
 
 		$current_post_category = get_the_category();
 
@@ -284,7 +293,7 @@ function crpt_short_circuit( $short_circuit ) {
 			$current_post_cats[] = $cat->cat_ID;
 		}
 
-		$exclude_categories = explode( ',', $crp_settings['exclude_on_categories'] );
+		$exclude_categories = explode( ',', $args['exclude_on_categories'] );
 
 		if ( ! empty( array_intersect( $current_post_cats, $exclude_categories ) ) ) {
 			return true;
@@ -293,4 +302,4 @@ function crpt_short_circuit( $short_circuit ) {
 
 	return $short_circuit;
 }
-add_filter( 'get_crp_short_circuit', 'crpt_short_circuit' );
+add_filter( 'get_crp_short_circuit', 'crpt_short_circuit', 10, 3 );

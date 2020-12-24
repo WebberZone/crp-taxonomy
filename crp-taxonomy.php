@@ -16,7 +16,7 @@
  * Plugin Name: Related Posts by Categories and Tags
  * Plugin URI: https://webberzone.com/downloads/crp-taxonomy/
  * Description: Restrict the related posts to the same category, tag or custom taxonomy. Requires Contextual Related Posts v2.6.0 or higher.
- * Version: 1.5.0-beta1
+ * Version: 1.6.0-beta1
  * Author: Ajay D'Souza
  * Author URI: https://webberzone.com
  * Text Domain: crp-taxonomy

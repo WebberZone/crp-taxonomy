@@ -52,7 +52,7 @@ add_filter( 'crp_posts_join', 'crpt_crp_posts_join', 10, 3 );
  * @return  string  Filtered WHERE clause
  */
 function crpt_crp_posts_where( $where, $post_id, $args ) {
-	global $wpdb, $post;
+	global $wpdb, $post, $crp_settings;
 
 	$term_ids          = array();
 	$taxonomies        = array();
@@ -101,13 +101,13 @@ function crpt_crp_posts_where( $where, $post_id, $args ) {
 	$current_taxonomies = get_object_taxonomies( $post );
 
 	// Temp variable used in crpt_crp_posts_having(). We only want to limit this for taxonomies linked to the current post type.
-	$args['crpt_taxonomy_count'] = count( array_intersect( $current_taxonomies, $taxonomies ) );
+	$crp_settings['crpt_taxonomy_count'] = count( array_intersect( $current_taxonomies, $taxonomies ) );
 
 	// Get the terms for the current post.
 	$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
 	if ( is_wp_error( $terms ) || empty( $terms ) ) {
-		$args['crpt_taxonomy_count'] = 0;
+		$crp_settings['crpt_taxonomy_count'] = 0;
 		return $where;
 	} else {
 		$sql = '';
@@ -135,11 +135,11 @@ function crpt_crp_posts_where( $where, $post_id, $args ) {
 			$term_count = count( $term_strings );
 
 			if ( $term_count ) {
-				$sql .= " AND CONCAT(crpt_tt.taxonomy, '/', crpt_t.term_id) IN (";
+				$sql .= " AND CONCAT(crpt_tt.taxonomy, '/', crpt_tt.term_id) IN (";
 				$sql .= implode( ',', $term_strings );
 				$sql .= ')';
 			} else {
-				$args['crpt_taxonomy_count'] = 0;
+				$crp_settings['crpt_taxonomy_count'] = 0;
 			}
 		} else {
 			// Limit to posts matching any current taxonomy term.
@@ -195,14 +195,15 @@ add_filter( 'crp_posts_groupby', 'crpt_crp_posts_groupby', 10, 3 );
  * @return string Filtered ORDER BY clause
  */
 function crpt_crp_posts_orderby( $orderby, $post_id, $args ) {
+	global $crp_settings;
 
-	if ( isset( $args['crpt_match_all'] ) && $args['crpt_match_all'] && isset( $args['crpt_taxonomy_count'] ) && $args['crpt_taxonomy_count'] ) {
+	if ( isset( $args['crpt_match_all'] ) && $args['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
 
 		// Add a comma if $orderby is not empty.
 		if ( ! empty( $orderby ) ) {
 			$orderby .= ',';
 		}
-		$orderby .= $args['crp_posts_match'] . ' DESC ';
+		$orderby .= $crp_settings['crp_posts_match'] . ' DESC ';
 	}
 
 	return $orderby;
@@ -221,12 +222,12 @@ add_filter( 'crp_posts_orderby', 'crpt_crp_posts_orderby', 10, 3 );
  * @return string Filtered HAVING clause
  */
 function crpt_crp_posts_having( $having, $post_id, $args ) {
-	global $wpdb;
+	global $wpdb, $crp_settings;
 
 	$crpt_no_of_taxes = isset( $args['crpt_no_of_taxes'] ) ? $args['crpt_no_of_taxes'] : 1;
 
-	if ( isset( $args['crpt_match_all'] ) && $args['crpt_match_all'] && isset( $args['crpt_taxonomy_count'] ) && $args['crpt_taxonomy_count'] ) {
-		$having .= $wpdb->prepare( ' ( COUNT(DISTINCT crpt_tt.taxonomy) = %d AND COUNT(DISTINCT crpt_tt.term_id) >= %d ) ', $args['crpt_taxonomy_count'], $crpt_no_of_taxes );
+	if ( isset( $args['crpt_match_all'] ) && $args['crpt_match_all'] && isset( $crp_settings['crpt_taxonomy_count'] ) && $crp_settings['crpt_taxonomy_count'] ) {
+		$having .= $wpdb->prepare( ' ( COUNT(DISTINCT crpt_tt.taxonomy) = %d AND COUNT(DISTINCT crpt_tt.term_id) >= %d ) ', $crp_settings['crpt_taxonomy_count'], $crpt_no_of_taxes );
 	}
 
 	return $having;
@@ -245,12 +246,13 @@ add_filter( 'crp_posts_having', 'crpt_crp_posts_having', 10, 3 );
  * @return array Filtered array of CRP Settings
  */
 function crpt_crp_posts_match( $match, $stuff, $post_id ) {
+	global $crp_settings;
 
 	// If matching all taxonomies, we store $match temporarily so it can be globally accessed.
 	if ( false !== strpos( $match, 'AND' ) ) {
 		$match_no_and = substr_replace( $match, '', strpos( $match, 'AND' ), 3 );
 	}
-	$args['crp_posts_match'] = $match_no_and;
+	$crp_settings['crp_posts_match'] = $match_no_and;
 
 	$post_type = get_post_type( $post_id );
 

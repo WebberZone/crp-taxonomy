@@ -30,22 +30,22 @@ function crpt_settings_general( $settings ) {
 	$new_settings = array(
 		'crpt_same_taxes'  => array(
 			'id'      => 'crpt_same_taxes',
-			'name'    => esc_html__( 'Fetch related posts only from', 'crp-taxonomy' ),
-			'desc'    => esc_html__( 'Limit the related posts only to the current categories, tags, and/or taxonomies.', 'crp-taxonomy' ),
+			'name'    => esc_html__( 'Only from same', 'crp-taxonomy' ),
+			'desc'    => esc_html__( 'Limit the related posts only to the categories, tags, and/or taxonomies of the current post.', 'crp-taxonomy' ),
 			'type'    => 'taxonomies',
 			'options' => '',
 		),
 		'crpt_match_all'   => array(
 			'id'      => 'crpt_match_all',
-			'name'    => esc_html__( 'Match all taxonomy terms', 'crp-taxonomy' ),
-			'desc'    => esc_html__( 'If selected, will limit the related posts to ones that match all the above selected taxonomy terms of the current post instead of just one of them. This can result in no related posts being found.', 'crp-taxonomy' ),
+			'name'    => esc_html__( 'Match all taxonomies', 'crp-taxonomy' ),
+			'desc'    => esc_html__( 'If enabled, then it will only select posts that match all the above selected taxonomies. This can result in no related posts being found.', 'crp-taxonomy' ),
 			'type'    => 'checkbox',
 			'options' => false,
 		),
 		'crpt_no_of_taxes' => array(
 			'id'      => 'crpt_no_of_taxes',
-			'name'    => esc_html__( 'Number of common taxonomies', 'crp-taxonomy' ),
-			'desc'    => esc_html__( 'Enter the minimum number of common taxonomies that have to be matched before a post is considered related.', 'crp-taxonomy' ),
+			'name'    => esc_html__( 'Number of common terms', 'crp-taxonomy' ),
+			'desc'    => esc_html__( 'Enter the minimum number of common terms that have to be matched before a post is considered related.', 'crp-taxonomy' ),
 			'type'    => 'number',
 			'options' => '1',
 			'min'     => '1',

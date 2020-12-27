@@ -64,6 +64,8 @@ If your question isn't listed here, please create a new post detailing your prob
 
 This is the penultimate version and is compatible with Contextual Related Posts v2.9.3 and below. All its functonality will be included in Contextual Related Posts v3.0.0.
 
+Some settings have been renamed in preparation for the new version.
+
 * Enhancements:
 	* Exclude on categories uses the short ciruit filter introduced in Contextual Related Posts v2.9.0
 	* Use `$args` instead of global `$crp_settings` for all filters

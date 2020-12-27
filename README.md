@@ -6,9 +6,9 @@
 [![Build Status](https://travis-ci.org/WebberZone/crp-taxonomy.svg?branch=master)](https://travis-ci.org/WebberZone/crp-taxonomy)
 [![Code Climate](https://codeclimate.com/github/WebberZone/crp-taxonomy/badges/gpa.svg)](https://codeclimate.com/github/WebberZone/crp-taxonomy)
 
-__Requires:__ WordPress v4.9, Contextual Related Posts v2.6.0
+__Requires:__ WordPress v5.0, Contextual Related Posts v2.6.0
 
-__Tested up to:__ WordPress v5.4
+__Tested up to:__ WordPress v5.6
 
 __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -17,6 +17,8 @@ __Plugin page:__ [Related Posts by Categories and Tags](https://webberzone.com/d
 Restrict the related posts by Contextual Related Posts to the same category, tag or custom taxonomy
 
 ## Description
+
+**This is the penultimate version of Related Posts by Categories and Tags.** Contextual Related Posts v3.0.0 will incorporate all the functionality of this plugin.
 
 [Related Posts by Categories and Tags](https://webberzone.com/downloads/crp-taxonomy/) is an extension for [Contextual Related Posts](https://webberzone.com/plugins/contextual-related-posts/) that adds another degree of related posts matching by adding the option to restrict these related posts to the same category, tag or custom taxonomy.
 

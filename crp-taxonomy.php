@@ -66,27 +66,82 @@ if ( ! defined( 'CRPT_PLUGIN_URL' ) ) {
 	define( 'CRPT_PLUGIN_URL', plugin_dir_url( CRPT_PLUGIN_FILE ) );
 }
 
-/*
- *---------------------------------------------------------------------------*
- * CRP modules & includes
- *----------------------------------------------------------------------------
- */
+// Only include files if we are below CRP_VERSION 3.0.0 as this functionality was added into v3.0.0.
+if ( defined( 'CRP_VERSION' ) && version_compare( CRP_VERSION, '3.0.0', '<' ) ) {
+	/*
+	*---------------------------------------------------------------------------*
+	* CRP modules & includes
+	*----------------------------------------------------------------------------
+	*/
 
-require_once CRPT_PLUGIN_DIR . 'includes/activation.php';
-require_once CRPT_PLUGIN_DIR . 'includes/filters.php';
-require_once CRPT_PLUGIN_DIR . 'includes/l10n.php';
-require_once CRPT_PLUGIN_DIR . 'includes/deprecated.php';
+	require_once CRPT_PLUGIN_DIR . 'includes/activation.php';
+	require_once CRPT_PLUGIN_DIR . 'includes/filters.php';
+	require_once CRPT_PLUGIN_DIR . 'includes/l10n.php';
+	require_once CRPT_PLUGIN_DIR . 'includes/deprecated.php';
 
-/*
- *---------------------------------------------------------------------------*
- * Dashboard and Administrative Functionality
- *----------------------------------------------------------------------------
-*/
+	/*
+	*---------------------------------------------------------------------------*
+	* Dashboard and Administrative Functionality
+	*----------------------------------------------------------------------------
+	*/
 
-if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+	if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
-	require_once CRPT_PLUGIN_DIR . 'includes/admin/admin.php';
-	require_once CRPT_PLUGIN_DIR . 'includes/admin/deprecated.php';
+		require_once CRPT_PLUGIN_DIR . 'includes/admin/admin.php';
+		require_once CRPT_PLUGIN_DIR . 'includes/admin/deprecated.php';
 
+	}
+} else {
+	add_filter( 'admin_notices', 'crpt_disabled_notice' );
+
+	/**
+	 * Disable plugin notice for CRP v3.0.0.
+	 *
+	 * @since 1.6.0
+	 */
+	function crpt_disabled_notice() {
+		crpt_migrate_settings();
+
+		?>
+		<div class="notice notice-warning">
+			<p><?php esc_html_e( 'Contextual Related Posts v3.0.0 or above has been detected. Related Posts by Categories and Tags is no longer needed as all its functionality has now been incorporated into Contextual Related Posts v3.0.0. You can deactivate and delete Related Posts by Categories and Tags. Remember to visit the Contextual Related Posts settings page and update your settings.', 'crp-taxonomy' ); ?></p>
+			<p><?php esc_html_e( 'This notice will remain until the plugin is deactived.', 'crp-taxonomy' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Upgrade CRP Taxonomy settings to CRP v3.0.0 and higher.
+	 *
+	 * @since 1.6.0
+	 */
+	function crpt_migrate_settings() {
+
+		$options = get_option( 'crp_settings' );
+
+		$settings = array(
+			'crpt_same_taxes'             => 'same_taxes',
+			'crpt_match_all'              => 'match_all',
+			'crpt_no_of_taxes'            => 'no_of_common_terms',
+			'crpt_disable_contextual'     => 'disable_contextual',
+			'crpt_disable_contextual_cpt' => 'disable_contextual_cpt',
+		);
+
+		// Migrate setting. $key holds the old setting and $value holds the new.
+		foreach ( $settings as $key => $value ) {
+			if ( isset( $options[ $value ] ) ) {
+				continue;
+			}
+			$options[ $value ] = isset( $options[ $key ] ) ? $options[ $key ] : crp_get_default_option( $value );
+			unset( $options[ $key ] );
+		}
+
+		$did_update = update_option( 'crp_settings', $options );
+
+		// If it updated, let's update the global variable.
+		if ( $did_update ) {
+			global $crp_settings;
+			$crp_settings = $options;
+		}
+	}
 }
-

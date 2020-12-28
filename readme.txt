@@ -135,5 +135,5 @@ Plugin has been renamed to "Related Posts by Categories and Tags"
 
 == Upgrade Notice ==
 
-= 1.5.0 =
-Bug fix, new options. Check Changelog for detailed updates
+= 1.6.0 =
+Penultimate version ahead of the Contextual Related Posts v3.0.0 release. Check Changelog for details.

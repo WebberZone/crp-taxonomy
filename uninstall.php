@@ -52,7 +52,6 @@ function crpt_delete_data() {
 		'crpt_no_of_taxes',
 		'crpt_disable_contextual',
 		'crpt_disable_contextual_cpt',
-		'exclude_on_cat_slugs',
 	);
 
 	foreach ( $options as $option ) {

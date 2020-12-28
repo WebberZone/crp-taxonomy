@@ -67,7 +67,7 @@ This is the penultimate version and is compatible with Contextual Related Posts 
 Some settings have been renamed in preparation for the new version.
 
 * Enhancements:
-	* Exclude on categories uses the short ciruit filter introduced in Contextual Related Posts v2.9.0
+	* Exclude on categories uses the short circuit filter introduced in Contextual Related Posts v2.9.0
 	* Use `$args` instead of global `$crp_settings` for all filters
 
 * Bug fixes:

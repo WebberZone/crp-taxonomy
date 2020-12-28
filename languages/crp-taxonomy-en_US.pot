@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Related Posts by Categories and Tags\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-22 21:59+0000\n"
+"POT-Creation-Date: 2020-12-28 16:03+0000\n"
 "PO-Revision-Date: 2017-05-07 13:07+0100\n"
 "Last-Translator: Ajay D'Souza\n"
 "Language-Team: me@ajaydsouza.com\n"
@@ -21,35 +21,47 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/admin/admin.php:33 includes/admin/deprecated.php:90
-msgid "Fetch related posts only from"
-msgstr ""
-
-#: includes/admin/admin.php:34 includes/admin/deprecated.php:113
+#: crp-taxonomy.php:107
 msgid ""
-"Limit the related posts only to the current categories, tags, and/or "
-"taxonomies."
+"Contextual Related Posts v3.0.0 or above has been detected. Related Posts by "
+"Categories and Tags is no longer needed as all its functionality has now "
+"been incorporated into Contextual Related Posts v3.0.0. You can deactivate "
+"and delete Related Posts by Categories and Tags. Remember to visit the "
+"Contextual Related Posts settings page and update your settings."
 msgstr ""
 
-#: includes/admin/admin.php:40 includes/admin/deprecated.php:119
-msgid "Match all taxonomy terms"
+#: crp-taxonomy.php:108
+msgid "This notice will remain until the plugin is deactived."
+msgstr ""
+
+#: includes/admin/admin.php:33
+msgid "Only from same"
+msgstr ""
+
+#: includes/admin/admin.php:34
+msgid ""
+"Limit the related posts only to the categories, tags, and/or taxonomies of "
+"the current post."
+msgstr ""
+
+#: includes/admin/admin.php:40
+msgid "Match all taxonomies"
 msgstr ""
 
 #: includes/admin/admin.php:41
 msgid ""
-"If selected, will limit the related posts to ones that match all the above "
-"selected taxonomy terms of the current post instead of just one of them. "
-"This can result in no related posts being found."
+"If enabled, then it will only select posts that match all the above selected "
+"taxonomies. This can result in no related posts being found."
 msgstr ""
 
 #: includes/admin/admin.php:47
-msgid "Number of common taxonomies"
+msgid "Number of common terms"
 msgstr ""
 
 #: includes/admin/admin.php:48
 msgid ""
-"Enter the minimum number of common taxonomies that have to be matched before "
-"a post is considered related."
+"Enter the minimum number of common terms that have to be matched before a "
+"post is considered related."
 msgstr ""
 
 #: includes/admin/admin.php:73 includes/admin/deprecated.php:144
@@ -96,6 +108,10 @@ msgid ""
 "v2.6.0. Please install it or deactivate this plugin."
 msgstr ""
 
+#: includes/admin/deprecated.php:90
+msgid "Fetch related posts only from"
+msgstr ""
+
 #: includes/admin/deprecated.php:92
 msgid "Same categories"
 msgstr ""
@@ -109,8 +125,18 @@ msgstr ""
 msgid "Same %s"
 msgstr ""
 
+#: includes/admin/deprecated.php:113
+msgid ""
+"Limit the related posts only to the current categories, tags, and/or "
+"taxonomies."
+msgstr ""
+
 #: includes/admin/deprecated.php:117
 msgid "Taxonomy matching:"
+msgstr ""
+
+#: includes/admin/deprecated.php:119
+msgid "Match all taxonomy terms"
 msgstr ""
 
 #: includes/admin/deprecated.php:120
